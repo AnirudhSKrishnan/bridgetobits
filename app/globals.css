@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === Tokyo Night tokens (yellow accent) === */
+:root {
+  --tn-bg: #1a1b26;
+  --tn-surface: #16161e;
+  --tn-border: #2a2e3f;
+  --tn-text: #c0caf5;
+  --tn-muted: #7c85a6;
+  --tn-yellow: #e0af68;  /* primary accent */
+  --tn-blue: #7aa2f7;   /* hover accent */
+  --tn-purple: #bb9af7;
+  --tn-cyan: #2ac3de;
+}
+
+html, body { height: 100%; }
+
+body {
+  color: var(--tn-text);
+  background-color: var(--tn-bg);
+  background-image:
+    radial-gradient(1200px 600px at 50% -10%, rgba(224,175,104,0.10), transparent 60%),
+    radial-gradient(900px 600px at 90% 10%, rgba(122,162,247,0.07), transparent 60%),
+    radial-gradient(900px 600px at 10% 20%, rgba(187,154,247,0.07), transparent 60%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
+  /* Hide the text caret globally so it doesn't blink on plain sections */
+  caret-color: transparent;
+}
+
+/* Layout helpers */
+.container { @apply mx-auto max-w-6xl px-4; }
+.section   { @apply py-16 md:py-24; }
+.h1        { @apply text-4xl md:text-6xl font-bold tracking-tight; }
+.h2        { @apply text-2xl md:text-4xl font-semibold tracking-tight; }
+.muted     { color: var(--tn-muted); }
+
+/* === Cards / Boxes === */
+/* Stronger base shadow on all cards */
+.card {
+  background-color: var(--tn-surface);
+  border: 1px solid var(--tn-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(255,255,255,0.03) inset;
+}
+
+/* Make a card focusable + yellow tint on hover/focus */
+.card-focusable {
+  position: relative;
+  outline: none;
+  border-radius: 1rem; /* match .card */
+  transition: box-shadow .18s ease, border-color .18s ease, transform .18s ease;
+}
+.card-focusable::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(80% 80% at 50% 0%,
+              rgba(224,175,104,0.18), rgba(224,175,104,0.08));
+  mix-blend-mode: screen; /* looks great on dark UI */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+.card-focusable:hover::after,
+.card-focusable:focus-visible::after,
+.card-focusable:focus-within::after {
+  opacity: 1;
+}
+.card-focusable:hover,
+.card-focusable:focus-visible,
+.card-focusable:focus-within {
+  box-shadow:
+    0 0 0 2px rgba(224,175,104,0.45),
+    0 18px 40px rgba(0,0,0,0.55),
+    0 0 30px rgba(224,175,104,0.16);
+  border-color: rgba(224,175,104,0.45);
+  transform: translateY(-2px);
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--tn-border);
+  background: #0f111a;
+  color: var(--tn-text);
+}
+
+/* Buttons */
+.btn { display:inline-flex; align-items:center; border-radius:.75rem; padding:.75rem 1.25rem; font-weight:600; }
+.btn-primary {
+  background: var(--tn-yellow);
+  color: #1a1209;
+  box-shadow: 0 0 0 1px rgba(224,175,104,0.35), 0 0 30px rgba(224,175,104,0.10);
+}
+.btn-primary:hover { filter: brightness(0.95); }
+.btn-ghost { border:1px solid var(--tn-border); background: var(--tn-surface); color: var(--tn-text); }
+.btn-ghost:hover { border-color: #3b4261; }
+
+/* Inputs */
+.input {
+  border: 1px solid var(--tn-border);
+  background: var(--tn-surface);
+  color: var(--tn-text);
+  border-radius: .75rem;
+  padding: .5rem .75rem;
+  font-size: .95rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* Re-enable caret in real fields/contenteditable */
+.input, textarea, input, [contenteditable="true"] { caret-color: var(--tn-text); }
+
+/* Styled native selects (dropdown look) */
+select.input {
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  padding-right: 2rem;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23e0af68' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right .65rem center;
+  background-size: 1rem;
+  cursor: pointer;
+}
+
+/* Navbar links: hover blue, focus-visible yellow ring */
+.nav-link {
+  font-size: .95rem;
+  color: var(--tn-text);
+  outline: none;
+  transition: color .15s ease, box-shadow .15s ease;
+}
+.nav-link:hover { color: var(--tn-blue); }
+.nav-link:focus-visible {
+  color: var(--tn-yellow);
+  box-shadow: 0 0 0 2px rgba(224,175,104,0.45);
+  border-radius: .5rem;
+}
+
+/* Details */
+details.card summary { list-style: none; cursor: pointer; }
+details.card summary::-webkit-details-marker { display: none; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-focusable { transition: none; }
+  .card-focusable::after { transition: none; }
+}

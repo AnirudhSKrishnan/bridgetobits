@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Massachusetts Institute of Technology",
+    "country": "USA",
+    "programs": [
+      "CS",
+      "EE",
+      "Mechanical"
+    ],
+    "gpa": "3.8+",
+    "deadline": "Dec 01",
+    "logo": ""
+  },
+  {
+    "name": "University of Cambridge",
+    "country": "UK",
+    "programs": [
+      "CS",
+      "Physics",
+      "Mathematics"
+    ],
+    "gpa": "First/Upper Second",
+    "deadline": "Oct 15",
+    "logo": ""
+  },
+  {
+    "name": "ETH Z\u00fcrich",
+    "country": "Switzerland",
+    "programs": [
+      "CS",
+      "EE",
+      "Data Science"
+    ],
+    "gpa": "Very good",
+    "deadline": "Nov 30",
+    "logo": ""
+  },
+  {
+    "name": "National University of Singapore",
+    "country": "Singapore",
+    "programs": [
+      "CS",
+      "EE",
+      "Bioengineering"
+    ],
+    "gpa": "3.6+",
+    "deadline": "Mar 31",
+    "logo": ""
+  },
+  {
+    "name": "University of Toronto",
+    "country": "Canada",
+    "programs": [
+      "CS",
+      "EE",
+      "Aerospace"
+    ],
+    "gpa": "3.7+",
+    "deadline": "Jan 15",
+    "logo": ""
+  },
+  {
+    "name": "University of Melbourne",
+    "country": "Australia",
+    "programs": [
+      "CS",
+      "EE",
+      "Mechanical"
+    ],
+    "gpa": "H1/H2A",
+    "deadline": "Oct 31",
+    "logo": ""
+  }
+]
