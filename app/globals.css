@@ -97,6 +97,33 @@ body {
   background: #0f111a;
   color: var(--tn-text);
 }
+/* Marquee: continuous leftward scroll with edge fade; pause on hover */
+.marquee {
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;              /* shrink-to-fit content */
+  animation: marquee-scroll 35s linear infinite;
+}
+
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* One card width for smooth scrolling */
+.testimonial-card {
+  min-width: 360px;
+}
+
+/* Loop one full row width (we duplicated items) */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* -50% = width of first set */
+}
 
 /* Buttons */
 .btn { display:inline-flex; align-items:center; border-radius:.75rem; padding:.75rem 1.25rem; font-weight:600; }
@@ -152,9 +179,84 @@ select.input {
 /* Details */
 details.card summary { list-style: none; cursor: pointer; }
 details.card summary::-webkit-details-marker { display: none; }
+.section, .container, main {
+  overflow: visible;
+}
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .card-focusable { transition: none; }
   .card-focusable::after { transition: none; }
+}
+/* Don't clip card shadows/glows */
+.section, .container, main { overflow: visible; }
+
+/* Marquee: continuous leftward scroll with edge fade; pause on hover */
+.marquee {
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.marquee__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: marquee-scroll 35s linear infinite;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* One card width for smooth scroll */
+.testimonial-card { min-width: 360px; }
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* -50% = width of the first set */
+}
+body {
+  color: var(--tn-text);
+  background-color: var(--tn-bg);
+  background-image:
+    radial-gradient(1200px 600px at 50% -10%, rgba(224,175,104,0.10), transparent 60%),
+    radial-gradient(900px 600px at 90% 10%, rgba(122,162,247,0.07), transparent 60%),
+    radial-gradient(900px 600px at 10% 20%, rgba(187,154,247,0.07), transparent 60%);
+  background-attachment: scroll;   /* <- was 'fixed' */
+  background-repeat: no-repeat;
+  caret-color: transparent;        /* hide caret globally */
+}
+
+ .section, .container, main { overflow: visible; }
+
+
+@media (max-width: 480px) {
+  .testimonial-card { min-width: 280px; }
+}
+/* Don't clip card shadows/glows */
+.section, .container, main { overflow: visible; }
+
+/* Marquee: continuous leftward scroll with edge fade; pause on hover */
+.marquee {
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.marquee__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: marquee-scroll 35s linear infinite;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* One card width for smooth scroll */
+.testimonial-card { min-width: 360px; }
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* -50% = width of the first set */
+}
+
+@media (max-width: 480px) {
+  .testimonial-card { min-width: 280px; }
 }

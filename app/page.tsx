@@ -3,16 +3,31 @@ import Section from "@/components/section";
 import FeatureCard from "@/components/feature-card";
 
 export default function HomePage() {
+  const testimonials = [
+    { name: "A.S.", text: "Clear guidance and practical tips—exactly what I needed." },
+    { name: "P.P.", text: "Made the process simple and stress-free." },
+    { name: "R.K.", text: "Actionable advice that actually works." },
+    { name: "T.M.", text: "Great clarity on timelines and paperwork." },
+    { name: "S.K.", text: "The university shortlist was spot-on." },
+  ];
+  const loop = [...testimonials, ...testimonials];
+
   return (
     <div>
-      <Section className="relative overflow-hidden">
+      {/* HERO */}
+      <Section className="relative">
         <div className="text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm" style={{ border: "1px solid var(--tn-border)", background: "#0f111a", color: "var(--tn-muted)" }}>
+          <div
+            className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm"
+            style={{ border: "1px solid var(--tn-border)", background: "#0f111a", color: "var(--tn-muted)" }}
+          >
             <span>🎓 Admissions Guidance</span>
             <span style={{ color: "#585f86" }}>•</span>
             <span>Tokyo Night — Yellow accent</span>
           </div>
-          <h1 className="h1" style={{ color: "var(--tn-text)" }}>Study abroad, simplified.</h1>
+          <h1 className="h1" style={{ color: "var(--tn-text)" }}>
+            Study abroad, simplified.
+          </h1>
           <p className="muted max-w-2xl mx-auto">
             A full Next.js scaffold mirroring the sections of the original site, themed like Tokyo Night with a yellow accent.
           </p>
@@ -23,6 +38,7 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* FEATURES */}
       <Section>
         <div className="text-center mb-10">
           <h2 className="h2" style={{ color: "var(--tn-text)" }}>Why this scaffold</h2>
@@ -35,20 +51,23 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* TESTIMONIALS — marquee */}
       <Section>
         <div className="text-center">
           <h2 className="h2" style={{ color: "var(--tn-text)" }}>Join hundreds of students</h2>
           <p className="muted mt-2">Testimonials area (sample content).</p>
-          <div className="grid md:grid-cols-3 gap-6 mt-8">
-            {["A.S.", "P.P.", "R.K."].map((initials) => (
-              <div key={initials} className="card">
-                <div className="font-semibold" style={{ color: "var(--tn-text)" }}>{initials}</div>
-                <p className="muted mt-2">
-                  “Clear guidance and practical tips—exactly what I needed.”
-                </p>
-              </div>
-            ))}
+
+          <div className="mt-8 marquee" aria-label="Student testimonials">
+            <div className="marquee__track">
+              {loop.map((t, i) => (
+                <div key={i} className="card card-focusable testimonial-card" tabIndex={0}>
+                  <div className="font-semibold" style={{ color: "var(--tn-text)" }}>{t.name}</div>
+                  <p className="muted mt-2">“{t.text}”</p>
+                </div>
+              ))}
+            </div>
           </div>
+
           <div className="mt-10">
             <Link href="/contact" className="btn btn-primary">Book a free call</Link>
           </div>
