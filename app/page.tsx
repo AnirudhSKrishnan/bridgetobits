@@ -17,34 +17,27 @@ export default function HomePage() {
     <div>
       {/* HERO */}
       <Section className="relative">
-        <div className="text-center space-y-6">
-          <Reveal delay={50}>
-            <div
-              className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm"
-              style={{ border: "1px solid var(--tn-border)", background: "#0f111a", color: "var(--tn-muted)" }}
-            >
-              <span>🎓 Admissions Guidance</span>
-              <span style={{ color: "#585f86" }}>•</span>
-              <span>Tokyo Night — Yellow accent</span>
-            </div>
-          </Reveal>
+        <div className="text-center space-y-8">
+          <div
+            className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm"
+            style={{ border: "1px solid var(--tn-border)", background: "#0f111a", color: "var(--tn-muted)" }}
+          >
+            <span>🎓 Trusted by BITS students</span>
+          </div>
 
-          <Reveal delay={120}>
-            <h1 className="h1 display-gradient">Study abroad, simplified.</h1>
-          </Reveal>
+          <h1 className="hero-display">
+            <span className="hero-gradient-blue hero-flow">Study abroad, simplified.</span>
+          </h1>
 
-          <Reveal delay={220} variant="fade">
-            <p className="muted max-w-2xl mx-auto">
-              A full Next.js scaffold mirroring the sections of the original site, themed like Tokyo Night with a yellow accent.
-            </p>
-          </Reveal>
+          <p className="hero-sub">
+            Navigate 2+2 and 3+1 transfer programs with confidence. Get expert guidance,
+            peer support, and exclusive resources designed specifically for BITS students.
+          </p>
 
-          <Reveal delay={320} variant="scale">
-            <div className="flex justify-center gap-3">
-              <Link href="/universities" className="btn btn-primary">Explore Universities</Link>
-              <Link href="/contact" className="btn btn-ghost">Contact Us</Link>
-            </div>
-          </Reveal>
+          <div className="flex justify-center gap-3">
+            <Link href="/universities" className="btn btn-primary btn-hero">Get Started Free</Link>
+            <Link href="/contact" className="btn btn-ghost btn-hero">Watch Videos</Link>
+          </div>
         </div>
       </Section>
 
@@ -52,9 +45,7 @@ export default function HomePage() {
       <Section>
         <div className="text-center mb-10">
           <Reveal>
-            <h2 className="h2" style={{ color: "var(--tn-text)" }}>
-              Why this scaffold
-            </h2>
+            <h2 className="h2" style={{ color: "var(--tn-text)" }}>Why this scaffold</h2>
           </Reveal>
           <Reveal delay={120} variant="fade">
             <p className="muted mt-2">Everything you need to ship a marketing site quickly.</p>

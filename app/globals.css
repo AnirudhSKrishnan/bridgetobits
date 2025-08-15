@@ -317,3 +317,35 @@ body {
 
 /* Make sure shadows/glows are not clipped */
 .section, .container, main { overflow: visible; }
+/* Big hero headline */
+.hero-display{
+  font-weight: 900;
+  line-height: .95;
+  letter-spacing: -.02em;
+  font-size: clamp(2.75rem, 8vw, 7rem); /* mobile → desktop */
+}
+
+/* Light-blue gradient text */
+.hero-gradient-blue{
+  --b1:#eaf2ff;  /* very light */
+  --b2:#d7e6ff;
+  --b3:#bcd5ff;
+  --b4:#9fc5ff;  /* light blue */
+  --b5:#7aa2f7;  /* TN blue */
+  background: linear-gradient(90deg,var(--b1),var(--b2),var(--b3),var(--b4),var(--b5));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
+  text-shadow: 0 6px 36px rgba(122,162,247,.28);
+}
+
+/* Flow animation */
+.hero-flow{
+  background-size: 260% 260%;
+  animation: heroFlow 10s ease-in-out infinite;
+}
+@keyframes heroFlow{
+  0%{background-position: 0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
