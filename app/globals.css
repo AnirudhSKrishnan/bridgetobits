@@ -106,6 +106,22 @@ body::after {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
+/* Full-page themed background (covers the entire scroll) */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #0b0f19;
+  background-image:
+    radial-gradient(1000px 600px at 15% -10%, rgba(131,96,195,.22), transparent 60%),
+    radial-gradient(1000px 600px at 85%   0%, rgba(46,191,145,.15), transparent 60%),
+    radial-gradient(900px  800px at 50% 120%, rgba(131,96,195,.10), transparent 60%),
+    linear-gradient(180deg, #0a1220, #0b0f19);
+  /* key line: the gradients stick to the viewport so they never “end” */
+  background-attachment: fixed, fixed, fixed, fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: var(--tn-text);
+}
 
 /* ---- Links --------------------------------------------------------------- */
 a { color: inherit; text-decoration: none; }
@@ -376,4 +392,14 @@ hr.nav-divider {
    This “transparent micro-border” cancels the compositor edge. */
 @supports (-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0)) {
   header { border-bottom: 0.0001px solid transparent !important; }
+}
+/* Never let sections paint a solid background */
+main, section, .section, .hero, .hero-wrap {
+  background: transparent !important;
+}
+
+/* And kill any stray top borders/shadows that create “bands” */
+main, section, .section, .hero, .hero-wrap {
+  border-top: 0 !important;
+  box-shadow: none !important;
 }
