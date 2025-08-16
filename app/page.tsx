@@ -45,7 +45,7 @@ export default function HomePage() {
     attributeName="gradientTransform"
     type="translate"
     values="-1 0; 1 0; -1 0"
-    dur="6s"
+    dur="10s"
     repeatCount="indefinite"
   />
 </linearGradient>
