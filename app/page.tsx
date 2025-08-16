@@ -25,9 +25,58 @@ export default function HomePage() {
             <span>🎓 Trusted by BITS students</span>
           </div>
 
-          <h1 className="hero-display">
-            <span className="hero-gradient-blue hero-flow">Study abroad, simplified.</span>
-          </h1>
+          {/* SEO/AT-friendly real heading (hidden visually) */}
+          <h1 className="sr-only">Study abroad, simplified.</h1>
+
+          {/* Gradient-only ripple headline using clipPath */}
+          <svg
+            className="heroClip"
+            viewBox="0 0 1400 320"
+            role="img"
+            aria-hidden="true"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              {/* flowing light-blue gradient */}
+     <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+  <stop offset="0%"   stopColor="#8360c3" />
+  <stop offset="100%" stopColor="#2ebf91" />
+  <animateTransform
+    attributeName="gradientTransform"
+    type="translate"
+    values="-1 0; 1 0; -1 0"
+    dur="6s"
+    repeatCount="indefinite"
+  />
+</linearGradient>
+ 
+ 
+              {/* IMPORTANT: user space units so text coords match the viewBox */}
+              <clipPath id="heroClipPath" clipPathUnits="userSpaceOnUse">
+                <text
+                  x="50%"
+                  y="140"
+                  textAnchor="middle"
+                  className="heroClip__text"
+                >
+                  Study abroad,
+                  <tspan x="50%" y="290">simplified.</tspan>
+                </text>
+              </clipPath>
+            </defs>
+
+            {/* Apply ripple to the gradient rect; clip it with the text shape */}
+            <g clipPath="url(#heroClipPath)">
+              <rect
+                x="0"
+                y="0"
+                width="1400"
+                height="320"
+                fill="url(#heroGrad)"
+                filter="url(#hero-water)"  /* defined once in app/layout.tsx */
+              />
+            </g>
+          </svg>
 
           <p className="hero-sub">
             Navigate 2+2 and 3+1 transfer programs with confidence. Get expert guidance,
@@ -47,7 +96,7 @@ export default function HomePage() {
           <Reveal>
             <h2 className="h2" style={{ color: "var(--tn-text)" }}>Why this scaffold</h2>
           </Reveal>
-          <Reveal delay={120} variant="fade">
+        <Reveal delay={120} variant="fade">
             <p className="muted mt-2">Everything you need to ship a marketing site quickly.</p>
           </Reveal>
         </div>

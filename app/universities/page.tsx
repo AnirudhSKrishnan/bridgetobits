@@ -5,8 +5,12 @@ import UniCard, { type Uni } from "@/components/uni-card";
 import data from "@/data/universities.json";
 import { useMemo, useState } from "react";
 
-const countries = Array.from(new Set((data as Uni[]).map(u => u.country))).sort();
-const programs = Array.from(new Set((data as Uni[]).flatMap(u => u.programs))).sort();
+const allUnis = data as Uni[];
+
+const countries = Array.from(new Set(allUnis.map((u) => u.country))).sort();
+const programs = Array.from(
+  new Set(allUnis.flatMap((u) => u.programs))
+).sort();
 
 export default function Universities() {
   const [country, setCountry] = useState<string>("All");
@@ -14,10 +18,16 @@ export default function Universities() {
   const [query, setQuery] = useState<string>("");
 
   const filtered = useMemo(() => {
-    return (data as Uni[]).filter(u => {
+    const q = query.trim().toLowerCase();
+
+    return allUnis.filter((u) => {
       const countryOk = country === "All" || u.country === country;
       const programOk = program === "All" || u.programs.includes(program);
-      const queryOk = !query || u.name.toLowerCase().includes(query.toLowerCase());
+      const queryOk =
+        !q ||
+        u.name.toLowerCase().includes(q) ||
+        (u.city && u.city.toLowerCase().includes(q)) ||
+        u.programs.some((p) => p.toLowerCase().includes(q));
       return countryOk && programOk && queryOk;
     });
   }, [country, program, query]);
@@ -26,30 +36,65 @@ export default function Universities() {
     <Section>
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         <div>
-          <h1 className="h2" style={{ color: "var(--tn-text)" }}>Universities</h1>
-          <p className="muted mt-2">Client-side filters by country and program.</p>
+          <h1 className="h2" style={{ color: "var(--tn-text)" }}>
+            Universities
+          </h1>
+          <p className="muted mt-2">
+            Client-side filters by country and program.
+          </p>
         </div>
-        <div className="grid grid-cols-2 md:flex gap-3">
-          <select className="input" value={country} onChange={e => setCountry(e.target.value)}>
+
+        {/* controls */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 items-center">
+          <select
+            className="input"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            aria-label="Filter by country"
+          >
             <option>All</option>
-            {countries.map(c => <option key={c}>{c}</option>)}
+            {countries.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
           </select>
-          <select className="input" value={program} onChange={e => setProgram(e.target.value)}>
+
+          <select
+            className="input"
+            value={program}
+            onChange={(e) => setProgram(e.target.value)}
+            aria-label="Filter by program"
+          >
             <option>All</option>
-            {programs.map(p => <option key={p}>{p}</option>)}
+            {programs.map((p) => (
+              <option key={p}>{p}</option>
+            ))}
           </select>
+
           <input
-            className="input col-span-2 md:col-span-1"
+            className="input col-span-2 sm:col-span-1"
             placeholder="Search by name..."
             value={query}
-            onChange={e => setQuery(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="Search by name"
           />
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {filtered.map((u) => <UniCard key={u.name} uni={u} />)}
-      </div>
+      {/* results */}
+      {filtered.length === 0 ? (
+        <div
+          className="mt-10 text-center"
+          style={{ color: "var(--tn-muted)" }}
+        >
+          No matches. Try clearing filters.
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {filtered.map((u) => (
+            <UniCard key={`${u.name}-${u.country}`} uni={u} />
+          ))}
+        </div>
+      )}
     </Section>
   );
 }

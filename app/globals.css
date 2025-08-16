@@ -303,6 +303,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .reveal { transition: none; transform: none; opacity: 1; }
 }
+/* apply the SVG ripple on top of the flowing gradient */
+.hero-liquid { filter: url(#hero-water); }
+@media (prefers-reduced-motion: reduce) {
+  .hero-liquid { filter: none; }
+}
+
+/* (optional) make the sweep a bit faster for visibility */
+.hero-flow { background-size: 300% 300%; animation: heroFlow 8s ease-in-out infinite; }
+
 
 /* ---------- Marquee (kept from earlier, L→R) ---------- */
 .marquee { position: relative; overflow: hidden; }
@@ -349,3 +358,19 @@ body {
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
+.heroClip { width: min(1200px, 92vw); height: auto; display: block; margin-inline: auto; }
+.heroClip__text {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: .92;
+  font-size: clamp(56px, 9vw, 160px);
+}
+.sr-only {
+  position: absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+/* ensure card content is above the tint overlay */
+.card, .card-focusable { position: relative; }
+.card-focusable::after { z-index: 0; }
+.card-focusable > * { position: relative; z-index: 1; }
