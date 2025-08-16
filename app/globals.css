@@ -9,24 +9,23 @@
 /* ---- CSS Variables ------------------------------------------------------- */
 :root{
   /* Surfaces */
-  --tn-bg-1: #0b0f19;
-  --tn-bg-2: #0a1220;
+  --tn-bg-1: #0b1220;   /* deep slate */
+  --tn-bg-2: #0a101b;
 
   /* Text & UI */
-  --tn-text:   #e8ecf4;
-  --tn-muted:  #8a95b2;
-  --tn-border: #2a3448;
+  --tn-text:   #e6ebf5;
+  --tn-muted:  #9fb2cc;
+  --tn-border: #1e2a3f;
 
-  /* Accents (primary/secondary) */
-  --tn-accent:   #2ebf91; /* teal */
-  --tn-accent-2: #8360c3; /* purple */
+  /* Accents */
+  --tn-accent:   #88c0d0; /* cyan */
+  --tn-accent-2: #a3be8c; /* soft green */
 
   /* Sizing rhythm */
   --tn-radius: 16px;
   --tn-radius-sm: 12px;
   --tn-gap: 1.25rem;
 }
-
 /* ---- Base / Reset -------------------------------------------------------- */
 *,
 *::before,
@@ -50,15 +49,17 @@ body {
     Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
   line-height: 1.6;
+
   /* Layered background: radials + vignette + ultra-subtle grain */
   background:
-    radial-gradient(1200px 700px at 15% -10%, rgba(131,96,195,.22), transparent 60%),
-    radial-gradient(1100px 650px at 85% 0%,  rgba(46,191,145,.15), transparent 60%),
-    radial-gradient(900px 800px  at 50% 120%, rgba(131,96,195,.10), transparent 60%),
+    radial-gradient(1200px 700px at 15% -10%, rgba(136,192,208,.25), transparent 60%),
+    radial-gradient(1100px 650px at 85% 0%,  rgba(163,190,140,.18), transparent 60%),
+    radial-gradient(900px 800px  at 50% 120%, rgba(136,192,208,.10), transparent 60%),
     linear-gradient(180deg, var(--tn-bg-2), var(--tn-bg-1));
   position: relative;
   overflow-x: hidden;
 }
+
 
 body::before {
   /* soft vignette */
@@ -113,11 +114,20 @@ a:hover { text-decoration: none; }
 /* =============================================================================
    Header / Navbar
    ========================================================================== */
-header {
+/* Navbar */
+header{
   backdrop-filter: saturate(140%) blur(10px);
-  background: linear-gradient(180deg, rgba(13,16,26,.65), rgba(13,16,26,.35));
-  border-bottom: 1px solid rgba(255,255,255,.04);
+  background: linear-gradient(180deg, rgba(11,18,32,.66), rgba(11,18,32,.38));
+  /* kill the hard divider */
+  border-bottom: 0;
+
+  /* soft separation instead of a line */
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.22);            /* outer drop */
+  /* If you want just a whisper of inner highlight, uncomment: */
+  /* ,0 1px 0 rgba(255,255,255,.02) inset */
 }
+
 .nav-link{
   color: var(--tn-text); opacity: .82; position: relative;
   transition: opacity .18s ease, color .18s ease;
@@ -128,6 +138,49 @@ header {
   content: ""; position: absolute; left: 0; right: 0; bottom: -10px; height: 2px;
   background: linear-gradient(90deg, var(--tn-accent), var(--tn-accent-2));
   border-radius: 2px;
+}
+/* If your Section component draws a border or shadow at the top: */
+section, .section, .hero, .hero-wrap {
+  border-top: 0 !important;
+  box-shadow: none;
+}
+
+/* ── NAVBAR: remove hard divider + prevent GPU hairline under blur ───────── */
+header{
+  /* keep your blur/saturation */
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+
+  /* translucent gradient background */
+  background: linear-gradient(180deg, rgba(11,18,32,.66), rgba(11,18,32,.38));
+
+  /* remove any solid divider */
+  border-bottom: 0 !important;
+
+  /* disable any shadow if you see a line come from shadow rendering */
+  box-shadow: none;
+
+  /* fix 1px GPU seam under sticky/blur headers */
+  transform: translateZ(0);
+  will-change: transform;
+
+  /* make sure it’s above content */
+  position: sticky; top: 0; z-index: 50;
+}
+
+/* if you previously added a fade pseudo-element on the header, kill it */
+header::after, header::before{
+  content: none !important;
+}
+
+/* sometimes the first section adds a top border – remove it */
+main > *:first-child{
+  border-top: 0 !important;
+}
+
+/* safety: some layouts add a border on the element right below the header */
+header + *{
+  border-top: 0 !important;
 }
 
 /* =============================================================================
@@ -274,4 +327,53 @@ code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "
 
 @media (prefers-reduced-motion: reduce){
   *{ animation: none !important; transition: none !important; }
+}
+/* ──────────────────────────────────────────────────────────────────────────
+   NAV HAIRLINE KILLER — put this at the VERY END of globals.css
+   ────────────────────────────────────────────────────────────────────────── */
+
+header {
+  /* keep your blur; promote to its own layer to avoid 1px seams */
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+
+  /* translucent bg WITHOUT any solid divider */
+  background: linear-gradient(180deg, rgba(11,18,32,.85) 0%, rgba(11,18,32,.55) 100%);
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+
+  /* sticky + layering fixes for GPU hairline */
+  position: sticky; top: 0; z-index: 1000;
+  transform: translateZ(0);               /* new layer */
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* nuke any decorative pseudo-elements that might draw a line */
+header::before,
+header::after { display: none !important; content: none !important; }
+
+/* sometimes the first section draws a top border or inner highlight */
+main > *:first-child,
+header + *,
+.section:first-child,
+.hero:first-child,
+.hero-wrap:first-child,
+section:first-child {
+  border-top: 0 !important;
+  box-shadow: none !important;
+}
+
+/* safety: kill any <hr> that might be used as a divider under the header */
+header + hr,
+hr.nav-divider {
+  display: none !important;
+  border: 0 !important;
+  height: 0 !important;
+}
+
+/* WebKit sometimes still paints a fractional edge under blur.
+   This “transparent micro-border” cancels the compositor edge. */
+@supports (-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0)) {
+  header { border-bottom: 0.0001px solid transparent !important; }
 }
