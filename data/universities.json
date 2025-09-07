@@ -1,74 +1,72 @@
 [
   {
-    "name": "Massachusetts Institute of Technology",
+    "name": "RMIT University",
+    "country": "Australia",
+    "city": "Melbourne",
+    "programs": ["2+2", "3+1"],
+    "gpa": "3.2+",
+    "toefl": "90+",
+    "ielts": "6.5+",
+    "deadlines": {
+      "fall": "April 1",
+      "spring": "November 1"
+    },
+    "badge": "Popular Choice",
+    "description": "Leading technology university with strong industry connections.",
+    "website": "https://www.rmit.edu.au",
+    "logo": "/logos/rmit.svg",
+    "ranking": "#1 in Australia"
+  },
+  {
+    "name": "Illinois State University",
+    "country": "USA", 
+    "city": "Normal",
+    "programs": ["2+2", "Direct Transfer"],
+    "gpa": "3.5+",
+    "toefl": "100+",
+    "ielts": "7.0+",
+    "deadlines": {
+      "fall": "March 1",
+      "spring": "October 1"
+    },
+    "badge": "Popular Choice",
+    "description": "World-renowned for engineering and computer science programs.",
+    "website": "https://illinoisstate.edu",
+    "logo": "/logos/isu.png",
+    "ranking": "#1 Public University"
+  },
+  {
+    "name": "University at Buffalo",
     "country": "USA",
-    "programs": [
-      "CS",
-      "EE",
-      "Mechanical"
-    ],
-    "gpa": "3.8+",
-    "deadline": "Dec 01",
-    "logo": ""
-  },
-  {
-    "name": "University of Cambridge",
-    "country": "UK",
-    "programs": [
-      "CS",
-      "Physics",
-      "Mathematics"
-    ],
-    "gpa": "First/Upper Second",
-    "deadline": "Oct 15",
-    "logo": ""
-  },
-  {
-    "name": "ETH Z\u00fcrich",
-    "country": "Switzerland",
-    "programs": [
-      "CS",
-      "EE",
-      "Data Science"
-    ],
-    "gpa": "Very good",
-    "deadline": "Nov 30",
-    "logo": ""
-  },
-  {
-    "name": "National University of Singapore",
-    "country": "Singapore",
-    "programs": [
-      "CS",
-      "EE",
-      "Bioengineering"
-    ],
-    "gpa": "3.6+",
-    "deadline": "Mar 31",
-    "logo": ""
-  },
-  {
-    "name": "University of Toronto",
-    "country": "Canada",
-    "programs": [
-      "CS",
-      "EE",
-      "Aerospace"
-    ],
-    "gpa": "3.7+",
-    "deadline": "Jan 15",
-    "logo": ""
+    "city": "Buffalo",
+    "programs": ["2+2", "3+1"],
+    "gpa": "3.3+",
+    "toefl": "100+",
+    "ielts": "7.0+", 
+    "deadlines": {
+      "fall": "February 1",
+      "winter": "October 1"
+    },
+    "description": "Leading research university with strong engineering programs.",
+    "website": "https://www.buffalo.edu",
+    "logo": "/logos/ub.png",
+    "ranking": "#1 in Canada"
   },
   {
     "name": "University of Melbourne",
     "country": "Australia",
-    "programs": [
-      "CS",
-      "EE",
-      "Mechanical"
-    ],
-    "gpa": "H1/H2A",
-    "deadline": "Oct 31",
-    "logo": ""
+    "city": "Melbourne",
+    "programs": ["2+2", "3+1"],
+    "gpa": "3.2+",
+    "toefl": "90+",
+    "ielts": "6.5+",
+    "deadlines": {
+      "semester1": "December 31",
+      "semester2": "May 31"
+    },
+    "description": "Prestigious university known for research and innovation.",
+    "website": "https://www.unimelb.edu.au",
+    "logo": "/logos/umelb.png",
+    "ranking": "#1 in Australia"
   }
 ]

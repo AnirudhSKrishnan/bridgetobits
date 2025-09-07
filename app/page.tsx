@@ -26,57 +26,13 @@ export default function HomePage() {
           </div>
 
           {/* SEO/AT-friendly real heading (hidden visually) */}
-          <h1 className="sr-only">Study abroad, simplified.</h1>
+          <h1 className="sr-only">Your bridge to international education</h1>
 
-          {/* Gradient-only ripple headline using clipPath */}
-          <svg
-            className="heroClip"
-            viewBox="0 0 1400 320"
-            role="img"
-            aria-hidden="true"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <defs>
-              {/* flowing light-blue gradient */}
-     <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-  <stop offset="0%"   stopColor="#8360c3" />
-  <stop offset="100%" stopColor="#2ebf91" />
-  <animateTransform
-    attributeName="gradientTransform"
-    type="translate"
-    values="-1 0; 1 0; -1 0"
-    dur="10s"
-    repeatCount="indefinite"
-  />
-</linearGradient>
- 
- 
-              {/* IMPORTANT: user space units so text coords match the viewBox */}
-              <clipPath id="heroClipPath" clipPathUnits="userSpaceOnUse">
-                <text
-                  x="50%"
-                  y="140"
-                  textAnchor="middle"
-                  className="heroClip__text"
-                >
-                  Study abroad,
-                  <tspan x="50%" y="290">simplified.</tspan>
-                </text>
-              </clipPath>
-            </defs>
-
-            {/* Apply ripple to the gradient rect; clip it with the text shape */}
-            <g clipPath="url(#heroClipPath)">
-              <rect
-                x="0"
-                y="0"
-                width="1400"
-                height="320"
-                fill="url(#heroGrad)"
-                filter="url(#hero-water)"  /* defined once in app/layout.tsx */
-              />
-            </g>
-          </svg>
+          {/* Simple gradient text headline */}
+          <div className="hero-gradient-text">
+            <span>Your bridge to</span>
+            <span>international education</span>
+          </div>
 
           <p className="hero-sub">
             Navigate 2+2 and 3+1 transfer programs with confidence. Get expert guidance,
@@ -121,11 +77,11 @@ export default function HomePage() {
             <h2 className="h2" style={{ color: "var(--tn-text)" }}>Join hundreds of students</h2>
           </Reveal>
           <Reveal delay={120} variant="fade">
-            <p className="muted mt-2">Testimonials area (sample content).</p>
+            <p className="muted mt-2 mb-large">Testimonials area (sample content).</p>
           </Reveal>
 
           <Reveal delay={180} variant="scale">
-            <div className="mt-8 marquee" aria-label="Student testimonials">
+            <div className="marquee" aria-label="Student testimonials">
               <div className="marquee__track">
                 {loop.map((t, i) => (
                   <div key={i} className="card card-focusable testimonial-card" tabIndex={0}>
@@ -138,7 +94,7 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal delay={260}>
-            <div className="mt-10">
+            <div className="mt-large">
               <Link href="/contact" className="btn btn-primary">Book a free call</Link>
             </div>
           </Reveal>
