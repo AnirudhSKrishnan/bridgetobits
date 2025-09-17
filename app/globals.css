@@ -340,7 +340,7 @@ header + *{
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 0.92;
-  font-size: clamp(48px, 8vw, 120px);
+  font-size: clamp(36px, 9vw, 108px);
   background: linear-gradient(135deg, #8360c3 0%, #2ebf91 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -391,7 +391,7 @@ header + *{
   animation: marquee 40s linear infinite;
 }
 .testimonial-card{
-  min-width: 300px;
+  min-width: 260px;
   max-width: 350px;
   flex-shrink: 0;
   padding: 2rem 1.75rem;
@@ -424,6 +424,14 @@ code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "
 .mb-large { margin-bottom: clamp(1.5rem, 3vw, 2rem); }
 .mt-large { margin-top: clamp(1.5rem, 3vw, 2rem); }
 .py-section { padding-top: clamp(2.5rem, 5vw, 4rem); padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+/* Mobile-first grid helpers */
+.grid-1-sm-2 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 640px){ .grid-1-sm-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }}
+@media (min-width: 768px){ .md\:container-pad { padding-inline: 1.25rem; }}
+
+/* Make container padding a bit larger on very small screens for breathing room */
+@media (max-width: 380px){ .container { padding-inline: 1rem; }}
 
 /* Program cards specific styling */
 .program-badge {

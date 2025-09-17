@@ -119,8 +119,8 @@ export default function UniCard({ uni }: { uni: Uni }) {
         </div>
       </div>
 
-      {/* Requirements and Deadlines Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+  {/* Requirements and Deadlines Grid */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         {/* Requirements */}
         <div>
           <h4 className="font-semibold text-sm mb-2" style={{ color: "var(--tn-text)" }}>
