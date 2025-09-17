@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type React from "react";
 
 type Props = {
   children: React.ReactNode;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
   delay?: number;          // ms
   variant?: "up" | "scale" | "fade";
   className?: string;
@@ -36,13 +37,18 @@ export default function Reveal({
     return () => obs.disconnect();
   }, []);
 
+  const variantClass = variant === "scale" ? "reveal-scale" : variant === "fade" ? "reveal-fade" : "";
+  const visibleClass = shown ? "is-visible" : "";
+  const extra = className ?? "";
+
+  const Comp = Tag as any;
   return (
-    <Tag
+    <Comp
       ref={ref as any}
-      className={`reveal ${variant === "scale" ? "reveal-scale" : variant === "fade" ? "reveal-fade" : ""} ${shown ? "is-visible" : ""} ${className ?? ""}`}
+      className={`reveal ${variantClass} ${visibleClass} ${extra}`.trim()}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
-    </Tag>
+    </Comp>
   );
 }
