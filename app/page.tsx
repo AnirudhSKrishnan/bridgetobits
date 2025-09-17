@@ -17,7 +17,7 @@ export default function HomePage() {
     <div>
       {/* HERO */}
       <Section className="relative">
-        <div className="text-center space-y-8">
+        <div className="text-center space-y-2 md:space-y-3">
           <div
             className="inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm"
             style={{ border: "1px solid var(--tn-border)", background: "#0f111a", color: "var(--tn-muted)" }}
@@ -26,13 +26,67 @@ export default function HomePage() {
           </div>
 
           {/* SEO/AT-friendly real heading (hidden visually) */}
-          <h1 className="sr-only">Your bridge to international education</h1>
+          <h1 className="sr-only">Your bridge to International education</h1>
 
-          {/* Simple gradient text headline */}
-          <div className="hero-gradient-text">
-            <span>Your bridge to</span>
-            <span>international education</span>
-          </div>
+          {/* Gradient-only ripple headline using clipPath */}
+          <svg
+            className="heroClip"
+            viewBox="0 0 1600 430"
+            role="img"
+            aria-hidden="true"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              {/* flowing light-blue gradient */}
+              <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#8360c3" />
+                <stop offset="100%" stopColor="#2ebf91" />
+                <animateTransform
+                  attributeName="gradientTransform"
+                  type="translate"
+                  values="-1 0; 1 0; -1 0"
+                  dur="6s"
+                  repeatCount="indefinite"
+                />
+              </linearGradient>
+
+              {/* Water ripple filter */}
+              <filter id="hero-water" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence baseFrequency="0.02 0.06" numOctaves="3" result="noise">
+                  <animate attributeName="baseFrequency" values="0.018 0.05;0.028 0.08;0.018 0.05" dur="4s" repeatCount="indefinite" />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="10">
+                  <animate attributeName="scale" values="9;12;9" dur="5s" repeatCount="indefinite" />
+                </feDisplacementMap>
+              </filter>
+
+              {/* IMPORTANT: user space units so text coords match the viewBox */}
+              <clipPath id="heroClipPath" clipPathUnits="userSpaceOnUse">
+                <text
+                  x="50%"
+                  y="120"
+                  textAnchor="middle"
+                  className="heroClip__text"
+                >
+                  Your bridge to
+                  <tspan x="50%" y="240">International</tspan>
+                  <tspan x="50%" y="360">education</tspan>
+                </text>
+              </clipPath>
+            </defs>
+
+            {/* Apply ripple to the gradient rect; clip it with the text shape */}
+            <g clipPath="url(#heroClipPath)">
+              <rect
+                x="0"
+                y="0"
+                width="1600"
+                height="430"
+                fill="url(#heroGrad)"
+                filter="url(#hero-water)"
+              />
+            </g>
+          </svg>
 
           <p className="hero-sub">
             Navigate 2+2 and 3+1 transfer programs with confidence. Get expert guidance,
@@ -60,7 +114,7 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {
               icon: (

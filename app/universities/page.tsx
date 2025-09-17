@@ -56,7 +56,7 @@ export default function Universities() {
         </div>
 
         {/* controls */}
-  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 items-center">
           <select
             className="input"
             value={country}
@@ -100,7 +100,7 @@ export default function Universities() {
           No matches. Try clearing filters.
         </div>
       ) : (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {filtered.map((u) => (
             <UniCard key={`${u.name}-${u.country}`} uni={u} />
           ))}

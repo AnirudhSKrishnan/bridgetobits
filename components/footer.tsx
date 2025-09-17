@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container py-10 grid gap-6 md:grid-cols-3">
         <div>
           <div className="font-bold text-lg" style={{ color: "var(--tn-text)" }}>BITS-AC</div>
-          <p className="muted mt-2">Tokyo Night theme with yellow accents.</p>
+          <p className="muted mt-2"> Bridge to Bits</p>
         </div>
         <div>
           <div className="font-semibold mb-2" style={{ color: "var(--tn-text)" }}>Pages</div>
@@ -21,11 +21,9 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <div className="font-semibold mb-2" style={{ color: "var(--tn-text)" }}>Built with</div>
+          <div className="font-semibold mb-2" style={{ color: "var(--tn-text)" }}>Built by Bitsians for Bitsians</div>
           <ul className="space-y-1 text-sm" style={{ color: "var(--tn-muted)" }}>
-            <li>Next.js + App Router</li>
-            <li>Tailwind CSS</li>
-            <li>Deployed on Vercel</li>
+           
           </ul>
         </div>
       </div>
