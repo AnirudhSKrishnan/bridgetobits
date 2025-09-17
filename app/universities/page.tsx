@@ -5,7 +5,18 @@ import UniCard, { type Uni } from "@/components/uni-card";
 import data from "@/data/universities.json";
 import { useMemo, useState } from "react";
 
-const allUnis = data as Uni[];
+// Normalize JSON to ensure deadlines are strictly Record<string, string>
+// This avoids TS issues when some JSON objects have optional keys (e.g., fall/spring vs semester1/semester2)
+const allUnis: Uni[] = (data as unknown as Array<Record<string, any>>).map((uni) => {
+  const normalizedDeadlines = Object.fromEntries(
+    Object.entries(uni.deadlines ?? {}).filter(([, v]) => typeof v === "string" && v)
+  ) as Record<string, string>;
+
+  return {
+    ...(uni as Omit<Uni, "deadlines">),
+    deadlines: normalizedDeadlines,
+  } as Uni;
+});
 
 const countries = Array.from(new Set(allUnis.map((u) => u.country))).sort();
 const programs = Array.from(
