@@ -1,0 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Integral+CF:wght@700;900&display=swap');
+
+:root {
+  --font-hero: 'Integral CF', 'Montserrat', Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}

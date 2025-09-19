@@ -1,6 +1,8 @@
 "use client";
 
 import Section from "@/components/section";
+import Image from "next/image";
+import Link from "next/link";
 import UniCard, { type Uni } from "@/components/uni-card";
 import data from "@/data/universities.json";
 import { useMemo, useState } from "react";
@@ -44,68 +46,80 @@ export default function Universities() {
   }, [country, program, query]);
 
   return (
-    <Section>
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-        <div>
-          <h1 className="h2" style={{ color: "var(--tn-text)" }}>
-            Universities
-          </h1>
-          <p className="muted mt-2">
-            Client-side filters by country and program.
-          </p>
+    <div className="mt-32 min-h-screen" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
+      <div className="fixed top-[-16px] left-6 z-50 hidden md:block">
+        <Link href="/">
+          <Image
+            src="/logos/b2b_logo.svg"
+            alt="Bridge to BITS Logo"
+            width={180}
+            height={180}
+            className="w-44 h-44 drop-shadow-2xl"
+            priority
+            style={{ background: '#111', borderRadius: '1.5rem', border: '2px solid #fac203' }}
+          />
+        </Link>
+      </div>
+      <Section>
+        <div className="w-full text-center">
+          <h1 className="h1 yellow-gradient text-center" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>Universities</h1>
         </div>
-
+        <div className="w-full text-center">
+        <p className="mt-6 mb-6 max-w-2xl mx-auto" style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.85 }}>
+         Browse your dream universities and their application details.
+        </p>
         {/* controls */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 items-center">
           <select
-            className="input"
+            className="input border-2 border-yellow-400 bg-black text-white"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             aria-label="Filter by country"
+            style={{ color: '#fff', background: '#111', borderColor: '#fac203' }}
           >
             <option>All</option>
             {countries.map((c) => (
               <option key={c}>{c}</option>
             ))}
           </select>
-
           <select
-            className="input"
+            className="input border-2 border-yellow-400 bg-black text-white"
             value={program}
             onChange={(e) => setProgram(e.target.value)}
             aria-label="Filter by program"
+            style={{ color: '#fff', background: '#111', borderColor: '#fac203' }}
           >
             <option>All</option>
             {programs.map((p) => (
               <option key={p}>{p}</option>
             ))}
           </select>
-
           <input
-            className="input col-span-2 sm:col-span-1"
+            className="input col-span-2 sm:col-span-1 border-2 border-yellow-400 bg-black text-white"
             placeholder="Search by name..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             aria-label="Search by name"
+            style={{ color: '#fff', background: '#111', borderColor: '#fac203' }}
           />
         </div>
-      </div>
-
-      {/* results */}
-      {filtered.length === 0 ? (
-        <div
-          className="mt-10 text-center"
-          style={{ color: "var(--tn-muted)" }}
-        >
-          No matches. Try clearing filters.
+        {/* results */}
+        {filtered.length === 0 ? (
+          <div
+            className="mt-10 text-center"
+            style={{ color: '#fac203', fontWeight: 600 }}
+          >
+            No matches. Try clearing filters.
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {filtered.map((u) => (
+              <UniCard key={`${u.name}-${u.country}`} uni={u} />
+            ))}
+          </div>
+        )}
         </div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {filtered.map((u) => (
-            <UniCard key={`${u.name}-${u.country}`} uni={u} />
-          ))}
-        </div>
-      )}
-    </Section>
+      </Section>
+    </div>
   );
 }

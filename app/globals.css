@@ -1,3 +1,20 @@
+/* =============================================================================
+   Home Page Black/White/Yellow Theme
+   ========================================================================== */
+.home-blackwhite {
+  background: #111 !important;
+  color: #fff !important;
+}
+.yellow-text {
+  color: #FFD600 !important;
+}
+.yellow-gradient {
+  background: linear-gradient(90deg, #FFD600 0%, #FFEA00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -45,9 +62,7 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: var(--font-main);
   line-height: 1.6;
 
   /* Layered background: radials + vignette + ultra-subtle grain */
@@ -99,7 +114,12 @@ body::after {
 }
 
 /* ---- Typography ---------------------------------------------------------- */
-.h1,.h2,.h3 { font-weight: 800; letter-spacing: -0.02em; }
+
+.h1,.h2,.h3 {
+  font-family: var(--font-main);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
 .h1 { font-size: clamp(44px, 6vw, 60px); line-height: 1.05; }
 .h2 { font-size: clamp(28px, 3.5vw, 36px); line-height: 1.12; }
 .h3 { font-size: clamp(22px, 2.7vw, 28px); line-height: 1.18; }
@@ -108,7 +128,7 @@ body::after {
 
 /* Prefer the imported hero font if available (set in layout.tsx as --font-hero) */
 .hero, .heroClip__text, .h1, .h2 {
-  font-family: var(--font-hero), Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: var(--font-hero);
 }
 
 /* Real H1 used for SEO, visually hidden */

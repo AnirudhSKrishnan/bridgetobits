@@ -1,6 +1,7 @@
 import Section from "@/components/section";
-import Reveal from "@/components/reveal";
+import Image from "next/image";
 import Link from "next/link";
+import Reveal from "@/components/reveal";
 
 export default function ProgramsPage() {
   const programs = [
@@ -16,36 +17,49 @@ export default function ProgramsPage() {
         "Cost-effective education",
         "Dual degree experience", 
         "International exposure",
-        "Better job prospects"
+        "Better job prospect"
       ]
     },
     {
-      id: "3+1",
-      title: "3+1 Transfer Program", 
-      description: "Complete 3 years at BITS, then transfer for final year abroad",
-      duration: "3 years at BITS + 1 year abroad",
+      id: "3+2",
+      title: "3+2 Integrated B.E. + MBA", 
+      description: "Complete 3 years at BITS, then remaining 2 years at BITSoM",
+      duration: "3 years at BITS + 2 years at BITSoM",
       timing: "After 6th semester at BITS",
-      countries: ["USA", "UK", "Germany"],
+      countries: ["India , Mumbai Campus"],
       benefits: [
-        "Shorter abroad duration",
+        "Shorter degree duration",
         "Lower overall cost",
-        "Specialized final year",
-        "International certification"
+        "Specialized final two years",
+        "Seamless blend of technology and management skills."
       ]
     }
   ];
 
   return (
-    <div>
+  <div className="mt-32 min-h-screen" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
+      <div className="fixed top-[-16px] left-6 z-50 hidden md:block">
+        <Link href="/">
+          <Image
+            src="/logos/b2b_logo.svg"
+            alt="Bridge to BITS Logo"
+            width={180}
+            height={180}
+            className="w-44 h-44 drop-shadow-2xl"
+            priority
+          />
+        </Link>
+      </div>
       {/* Hero Section */}
       <Section>
         <div className="text-center">
           <Reveal>
-            <h1 className="h1" style={{ color: "var(--tn-text)" }}>Transfer Programs</h1>
+            <h1 className="h1 yellow-gradient" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>Transfer Programs</h1>
           </Reveal>
           <Reveal delay={120} variant="fade">
-            <p className="hero-sub mt-3 mb-6">
-              Explore different pathways to international education. Choose the program that best fits your goals and timeline.
+            <p className="hero-sub mt-8 mb-6 max-w-3xl mx-auto" style={{ fontFamily: 'Inter, Montserrat, Arial, sans-serif', color: '#fff', fontSize: '1.2rem' }}>
+              Explore diverse transfer programs at BITS, designed to match your goals and timeline, 
+              both programs offer cost-effective, flexible, and career-focused opportunities.
             </p>
           </Reveal>
         </div>
@@ -56,7 +70,7 @@ export default function ProgramsPage() {
         <div className="grid lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {programs.map((program, index) => (
             <Reveal key={program.id} delay={index * 120}>
-              <div className="card card-focusable h-full relative">
+              <div className="card card-focusable h-full relative" style={{ background: '#181818', border: '1.5px solid #333' }}>
                 {program.badge && (
                   <div className="absolute -top-3 left-6">
                     <span
@@ -72,11 +86,11 @@ export default function ProgramsPage() {
                 )}
                 
                 <div className="flex flex-col h-full">
-                  <h3 className="h3 mb-3" style={{ color: "var(--tn-text)" }}>
+                  <h3 className="h3 mb-3" style={{ color: '#fac203', fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
                     {program.title}
                   </h3>
                   
-                  <p className="muted mb-4 flex-grow">
+                  <p className="mb-4 flex-grow" style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.85 }}>
                     {program.description}
                   </p>
 
@@ -139,7 +153,7 @@ export default function ProgramsPage() {
 
                   {/* Key Benefits */}
                   <div className="mb-4">
-                    <h4 className="font-semibold mb-2" style={{ color: "var(--tn-text)" }}>
+                    <h4 className="font-semibold mb-2" style={{ color: '#fac203', fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
                       Key Benefits:
                     </h4>
                     <ul className="space-y-1.5">
@@ -149,20 +163,32 @@ export default function ProgramsPage() {
                             className="w-1.5 h-1.5 rounded-full"
                             style={{ background: "var(--tn-accent)" }}
                           ></div>
-                          <span className="muted">{benefit}</span>
+                          <span style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.85 }}>{benefit}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   {/* CTA Button */}
-                  <div className="mt-auto">
-                    <Link 
-                      href={`/contact?program=${program.id}`}
-                      className="btn btn-ghost w-full justify-center"
-                    >
-                      Learn More
-                    </Link>
+                  <div className="mt-auto flex flex-col gap-2">
+                    {program.id === "3+2" ? (
+                      <>
+                        <Link 
+                          href="https://www.youtube.com/watch?v=cBdndQ-FkCw&list=PLoBCRIeHc-vsjNQradLECiqcb3X-rlUZ4"
+                          className="btn btn-ghost w-full justify-center"
+                        >
+                          Learn More(3+2)
+                        </Link>
+                      
+                      </>
+                    ) : (
+                      <Link 
+                        href="https://www.youtube.com/playlist?list=PLoBCRIeHc-vuiKr8gk5JwZpvFylh64JqS"
+                        className="btn btn-ghost w-full justify-center"
+                      >
+                        Learn More (2+2)
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
@@ -175,19 +201,19 @@ export default function ProgramsPage() {
       <Section>
         <div className="text-center">
           <Reveal>
-            <h2 className="h2 mb-4" style={{ color: "var(--tn-text)" }}>Ready to Start Your Journey?</h2>
+            <h2 className="h2 yellow-gradient mb-4" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>Ready to Start Your Journey?</h2>
           </Reveal>
           <Reveal delay={120} variant="fade">
-            <p className="muted mb-6 max-w-2xl mx-auto">
-              Each program offers unique advantages. Our expert advisors can help you choose the best path based on your academic goals, financial situation, and career aspirations.
+            <p className="mb-6 max-w-2xl mx-auto" style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.9 }}>
+              Each program comes with its own set of advantages, and you don’t have to figure it out alone. A dedicated team of 2+2 BITSians  who’ve already gone through the journey and experienced it firsthand will guide you. They’ll help you choose the path that best fits your academic goals, financial plans, and career aspirations.
             </p>
           </Reveal>
           <Reveal delay={180}>
             <div className="flex justify-center gap-4">
-              <Link href="/contact" className="btn btn-primary">
+              <Link href="/contact" className="btn" style={{ background: '#fac203', color: '#111', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: '600' }}>
                 Schedule Free Consultation
               </Link>
-              <Link href="/universities" className="btn btn-ghost">
+              <Link href="/universities" className="btn" style={{ border: '1px solid #fac203', color: '#fac203', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: '600' }}>
                 Browse Universities
               </Link>
             </div>

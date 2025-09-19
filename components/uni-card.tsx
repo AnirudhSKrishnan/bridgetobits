@@ -7,20 +7,25 @@ export type Uni = {
   country: string;
   city?: string;
   programs: string[];
-  gpa: string;
-  toefl?: string;
-  ielts?: string;
+  requirements?: string[];
   deadlines: {
     [key: string]: string;
   };
+  gpa?: string;
+  toefl?: string;
+  ielts?: string;
   website?: string;
   badge?: string;
   description?: string;
   logo?: string;
   ranking?: string;
+  video?: string;
 };
 
+import { useState } from "react";
+
 export default function UniCard({ uni }: { uni: Uni }) {
+  const [showVideo, setShowVideo] = useState(false);
   return (
     <div className="card card-focusable">
       {uni.badge && (
@@ -127,18 +132,22 @@ export default function UniCard({ uni }: { uni: Uni }) {
             Requirements
           </h4>
           <div className="space-y-1 text-sm">
-            <div style={{ color: "var(--tn-muted)" }}>
-              GPA: {uni.gpa}
-            </div>
-            {uni.toefl && (
-              <div style={{ color: "var(--tn-muted)" }}>
-                TOEFL: {uni.toefl}
-              </div>
-            )}
-            {uni.ielts && (
-              <div style={{ color: "var(--tn-muted)" }}>
-                IELTS: {uni.ielts}
-              </div>
+            {uni.requirements && uni.requirements.length > 0 ? (
+              uni.requirements.map((req, idx) => (
+                <div key={idx} style={{ color: "var(--tn-muted)" }}>{req}</div>
+              ))
+            ) : (
+              <>
+                {uni.gpa && (
+                  <div style={{ color: "var(--tn-muted)" }}>GPA: {uni.gpa}</div>
+                )}
+                {uni.toefl && (
+                  <div style={{ color: "var(--tn-muted)" }}>TOEFL: {uni.toefl}</div>
+                )}
+                {uni.ielts && (
+                  <div style={{ color: "var(--tn-muted)" }}>IELTS: {uni.ielts}</div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -149,11 +158,15 @@ export default function UniCard({ uni }: { uni: Uni }) {
             Deadlines
           </h4>
           <div className="space-y-1 text-sm">
-            {Object.entries(uni.deadlines).map(([period, date]) => (
-              <div key={period} style={{ color: "var(--tn-muted)" }}>
-                {period.charAt(0).toUpperCase() + period.slice(1)}: {date}
-              </div>
-            ))}
+            {uni.deadlines && Object.keys(uni.deadlines).length === 1 && Object.keys(uni.deadlines)[0].toLowerCase() === 'tba' ? (
+              <div style={{ color: "var(--tn-muted)" }}>TBA</div>
+            ) : (
+              Object.entries(uni.deadlines).map(([period, date]) => (
+                <div key={period} style={{ color: "var(--tn-muted)" }}>
+                  {period.charAt(0).toUpperCase() + period.slice(1)}: {date}
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -169,12 +182,23 @@ export default function UniCard({ uni }: { uni: Uni }) {
             <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
           </svg>
         </button>
-        <button
-          className="btn btn-ghost flex-1 text-sm justify-center"
-          style={{ background: "rgba(255,255,255,0.1)" }}
-        >
-          Watch Video
-        </button>
+        {uni.video ? (
+          <button
+            className="btn btn-ghost flex-1 text-sm justify-center"
+            style={{ background: "rgba(255,255,255,0.1)" }}
+            onClick={() => window.open(uni.video, '_blank')}
+          >
+            Watch Video
+          </button>
+        ) : (
+          <button
+            className="btn btn-ghost flex-1 text-sm justify-center"
+            style={{ background: "rgba(255,255,255,0.1)" }}
+            disabled
+          >
+            Watch Video
+          </button>
+        )}
       </div>
     </div>
   );

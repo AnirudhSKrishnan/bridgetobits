@@ -1,0 +1,40 @@
+
+.custom-cursor {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 9999;
+  transition: width 0.2s ease, height 0.2s ease, transform 0.1s ease, background-color 0.2s ease, mix-blend-mode 0.2s ease;
+  will-change: width, height, transform, background-color;
+}
+
+body {
+  cursor: none;
+}
+
+a, button, input[type="submit"] {
+  cursor: none;
+}
+
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  background-color: rgba(255, 214, 0, 0.7);
+  transform: translate(-50%, -50%);
+  animation: ripple-effect 0.6s linear;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+@keyframes ripple-effect {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  to {
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+  }
+}

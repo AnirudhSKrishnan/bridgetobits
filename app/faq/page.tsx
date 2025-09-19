@@ -1,10 +1,95 @@
 "use client";
 
+
 import Section from "@/components/section";
 import Reveal from "@/components/reveal";
-import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 
 export default function FAQPage() {
+  // AnimatedCounter for stat cards
+  function AnimatedCounter({ target, suffix = "", duration = 2000 }: { target: number; suffix?: string; duration?: number }) {
+    const [count, setCount] = useState(0);
+    const frame = useRef<number | null>(null);
+    useEffect(() => {
+      let start = 0;
+      const end = target;
+      if (start === end) return;
+      let startTime: number | null = null;
+      function animateCounter(timestamp: number) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        setCount(Math.floor(progress * (end - start) + start));
+        if (progress < 1) {
+          frame.current = requestAnimationFrame(animateCounter);
+        } else {
+          setCount(end);
+        }
+      }
+      frame.current = requestAnimationFrame(animateCounter);
+      return () => { if (frame.current) cancelAnimationFrame(frame.current); };
+    }, [target, duration]);
+    return <span>{count}{suffix}</span>;
+  }
+
+  return (
+    <div className="mt-32 min-h-screen" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
+      <div className="fixed top-[-16px] left-6 z-50 hidden md:block">
+        <Link href="/">
+          <Image
+            src="/logos/b2b_logo.svg"
+            alt="Bridge to BITS Logo"
+            width={180}
+            height={180}
+            className="w-44 h-44 drop-shadow-2xl"
+            priority
+            style={{ background: '#111', borderRadius: '1.5rem', border: '2px solid #fac203' }}
+          />
+        </Link>
+      </div>
+      <Section>
+        <div className="text-center max-w-2xl mx-auto">
+          <h1 className="h2 yellow-gradient text-center mb-4" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold', fontSize: 'clamp(2.2rem, 6vw, 4rem)', lineHeight: 1.08, whiteSpace: 'normal' }}>
+            Frequently Asked Questions
+          </h1>
+          <p className="mb-8 text-lg text-center" style={{ color: '#fff', opacity: 0.85, fontFamily: 'Inter, Montserrat, Arial, sans-serif', fontSize: '1.25rem' }}>
+            Find answers to the most common questions about international transfers from BITS. Can't find what you're looking for? Reach out to us!
+          </p>
+          <div className="flex flex-wrap md:flex-nowrap justify-center gap-8 mb-8">
+            <div className="bg-[#181818] rounded-xl shadow-lg px-8 py-6 flex flex-col items-center min-w-[180px] border border-yellow-400">
+              <span className="text-5xl font-extrabold mb-2" style={{ color: '#fac203', fontFamily: 'Helvetica, Arial, sans-serif' }}>
+                <AnimatedCounter target={5000} suffix="+" duration={1800} />
+              </span>
+              <span className="text-lg font-semibold" style={{ color: '#fff', opacity: 0.95 }}>Questions Answered</span>
+            </div>
+            <div className="bg-[#181818] rounded-xl shadow-lg px-8 py-6 flex flex-col items-center min-w-[180px] border border-yellow-400">
+              <span className="text-5xl font-extrabold mb-2" style={{ color: '#fac203', fontFamily: 'Helvetica, Arial, sans-serif' }}>
+                <AnimatedCounter target={24} suffix="h" duration={1800} />
+              </span>
+              <span className="text-lg font-semibold" style={{ color: '#fff', opacity: 0.95 }}>Average Response Time</span>
+            </div>
+            <div className="bg-[#181818] rounded-xl shadow-lg px-8 py-6 flex flex-col items-center min-w-[180px] border border-yellow-400">
+              <span className="text-5xl font-extrabold mb-2" style={{ color: '#fac203', fontFamily: 'Helvetica, Arial, sans-serif' }}>
+                <AnimatedCounter target={100} suffix="%" duration={1800} />
+              </span>
+              <span className="text-lg font-semibold" style={{ color: '#fff', opacity: 0.95 }}>Questions Resolved</span>
+            </div>
+          </div>
+          <input
+            className="input w-full max-w-md mx-auto border-2 border-yellow-400 bg-black text-white text-center"
+            placeholder="Search FAQs..."
+            style={{ color: '#fff', background: '#111', borderColor: '#fac203', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}
+            // Optionally, wire up to searchQuery state
+          />
+        </div>
+      </Section>
+      <FAQPageContent />
+    </div>
+  );
+}
+
+function FAQPageContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [openQuestion, setOpenQuestion] = useState<string | null>(null);
 
@@ -112,9 +197,9 @@ export default function FAQPage() {
   ];
 
   const stats = [
-    { number: "50+", label: "Questions Answered" },
+    { number: "5000+", label: "Questions Answered" },
     { number: "24h", label: "Average Response Time" },
-    { number: "95%", label: "Questions Resolved" }
+    { number: "100%", label: "Questions Resolved" }
   ];
 
   const filteredCategories = faqCategories.map(category => ({
@@ -130,45 +215,10 @@ export default function FAQPage() {
     setOpenQuestion(openQuestion === questionId ? null : questionId);
   };
 
+
   return (
     <div>
-      {/* Hero Section */}
-      <Section>
-        <div className="text-center">
-          <Reveal>
-            <h1 className="h1" style={{ color: "var(--tn-text)" }}>Frequently Asked Questions</h1>
-          </Reveal>
-          <Reveal delay={120} variant="fade">
-            <p className="hero-sub mt-3 mb-6 max-w-3xl mx-auto">
-              Find answers to the most common questions about international transfers from BITS. Can't find what you're looking for? Reach out to us!
-            </p>
-          </Reveal>
-          
-          {/* Search Bar */}
-          <Reveal delay={180}>
-            <div className="max-w-md mx-auto">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search FAQs..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="input w-full pl-10"
-                />
-                <svg 
-                  className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2"
-                  style={{ color: "var(--tn-muted)" }}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
+      {/* Remove duplicate hero section here, only render FAQ content below */}
 
       {/* FAQ Categories */}
       <div className="py-section-sm">
@@ -178,7 +228,7 @@ export default function FAQPage() {
               <Reveal key={category.title} delay={categoryIndex * 100}>
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <h2 className="h3" style={{ color: "var(--tn-text)" }}>
+                    <h2 className="text-2xl font-bold mb-4 mt-8 yellow-gradient text-left" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
                       {category.title}
                     </h2>
                     <div 
@@ -191,21 +241,20 @@ export default function FAQPage() {
                     {category.questions.map((faq, index) => (
                       <div 
                         key={faq.id}
-                        className="card cursor-pointer"
+                        className={`card cursor-pointer mb-4 bg-[#181818] border border-yellow-400 ${openQuestion === faq.id ? 'shadow-lg' : ''}`}
                         onClick={() => toggleQuestion(faq.id)}
+                        style={{ color: '#fff' }}
                       >
                         <div className="flex items-center justify-between">
                           <h3 
-                            className="font-medium pr-4"
-                            style={{ color: "var(--tn-text)" }}
+                            className="font-semibold pr-4 text-lg"
+                            style={{ color: openQuestion === faq.id ? '#fac203' : '#fff', fontFamily: 'Helvetica, Arial, sans-serif' }}
                           >
                             {faq.question}
                           </h3>
                           <svg
-                            className={`w-5 h-5 flex-shrink-0 transform transition-transform ${
-                              openQuestion === faq.id ? 'rotate-180' : ''
-                            }`}
-                            style={{ color: "var(--tn-muted)" }}
+                            className={`w-5 h-5 flex-shrink-0 transform transition-transform ${openQuestion === faq.id ? 'rotate-180' : ''}`}
+                            style={{ color: openQuestion === faq.id ? '#fac203' : '#fff' }}
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -213,10 +262,9 @@ export default function FAQPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
                         </div>
-                        
                         {openQuestion === faq.id && (
-                          <div className="mt-4 pt-4" style={{ borderTop: "1px solid var(--tn-border)" }}>
-                            <p className="muted leading-relaxed">
+                          <div className="mt-4 pt-4 border-t border-yellow-400" style={{ color: '#fff', opacity: 0.95 }}>
+                            <p className="leading-relaxed" style={{ fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
                               {faq.answer}
                             </p>
                           </div>
@@ -231,52 +279,26 @@ export default function FAQPage() {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="py-section-sm">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {stats.map((stat, index) => (
-              <Reveal key={stat.label} delay={index * 120}>
-                <div className="space-y-1">
-                  <div 
-                    className="text-4xl font-bold"
-                    style={{ color: "var(--tn-text)" }}
-                  >
-                    {stat.number}
-                  </div>
-                  <div 
-                    className="text-base"
-                    style={{ color: "var(--tn-accent)" }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Contact CTA */}
       <div className="py-section-sm">
         <div className="container">
-          <div className="text-center">
+          <div className="text-center max-w-2xl mx-auto">
             <Reveal>
-              <h2 className="h2 mb-3" style={{ color: "var(--tn-text)" }}>
+              <h2 className="h2 yellow-gradient text-center mb-3" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold', fontSize: '2.2rem' }}>
                 Still have questions?
               </h2>
             </Reveal>
             <Reveal delay={120} variant="fade">
-              <p className="muted mb-5 max-w-2xl mx-auto">
+              <p className="mb-5 max-w-2xl mx-auto text-lg" style={{ color: '#fff', opacity: 0.85, fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
                 Can't find the answer you're looking for? Our team is here to help you with personalized guidance for your transfer journey.
               </p>
             </Reveal>
             <Reveal delay={180}>
               <div className="flex justify-center gap-4">
-                <a href="/contact" className="btn btn-primary">
+                <a href="/contact" className="btn btn-primary" style={{ background: '#FFD600', color: '#111', border: 'none', fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
                   Contact Us
                 </a>
-                <a href="/stories" className="btn btn-ghost">
+                <a href="/stories" className="btn btn-ghost" style={{ color: '#FFD600', borderColor: '#FFD600', fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
                   Read Success Stories
                 </a>
               </div>

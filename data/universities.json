@@ -3,70 +3,115 @@
     "name": "RMIT University",
     "country": "Australia",
     "city": "Melbourne",
-    "programs": ["2+2", "3+1"],
-    "gpa": "3.2+",
-    "toefl": "90+",
-    "ielts": "6.5+",
+    "programs": ["2+2"],
+    "requirements": [
+      "1. Competitive BITSAT score",
+      "2. English Proficiency test or equivalent MOI",
+      "3. 75 percentage or more in PCM in 12th standard"
+    ],
     "deadlines": {
-      "fall": "April 1",
-      "spring": "November 1"
+      "TBA": "TBA"
     },
     "badge": "Popular Choice",
-    "description": "Leading technology university with strong industry connections.",
+    "description": "BITS’s most popular 2+2 collaboration, a hub of practical learning with RMIT, one of Australia’s oldest and most in-demand international programs.",
     "website": "https://www.rmit.edu.au",
     "logo": "/logos/rmit.svg",
-    "ranking": "#1 in Australia"
+    "ranking": "#10 in Australia"
+  ,"video": "https://www.youtube.com/watch?v=rioNsIHlYGc&t=734s"
   },
   {
-    "name": "Illinois State University",
-    "country": "USA", 
-    "city": "Normal",
-    "programs": ["2+2", "Direct Transfer"],
-    "gpa": "3.5+",
-    "toefl": "100+",
-    "ielts": "7.0+",
+    "name": "CentraleSupélec, Paris",
+    "country": "France", 
+    "city": "Paris",
+    "programs": ["2+2"],
+    "requirements": [
+    "1. Competitive BITSAT score",
+      "2. English Proficiency test within 2 years at BITS",
+      "3. 75 percentage or more in PCM in 12th standard"
+    ],
     "deadlines": {
-      "fall": "March 1",
-      "spring": "October 1"
+      "TBA": "TBA"
     },
     "badge": "Popular Choice",
-    "description": "World-renowned for engineering and computer science programs.",
-    "website": "https://illinoisstate.edu",
-    "logo": "/logos/isu.png",
-    "ranking": "#1 Public University"
+    "description": " A hub of academic excellence, renowned for innovation, cutting-edge research, and home to Nobel laureates.",
+    "website": "https://www.iastate.edu",
+    "logo": "/logos/csp_logo.svg",
+    "ranking": "#2 in France"
+  ,"video": "https://www.youtube.com/watch?v=MpajInwRyFE&t=69s"
   },
   {
-    "name": "University at Buffalo",
+    "name": "University of Buffalo",
     "country": "USA",
     "city": "Buffalo",
-    "programs": ["2+2", "3+1"],
-    "gpa": "3.3+",
-    "toefl": "100+",
-    "ielts": "7.0+", 
+    "programs": ["2+2"],
+     "requirements": [
+     "1. Competitive BITSAT score",
+      "2. English Proficiency test",
+      "3. 75 percentage or more in PCM in 12th standard"
+    ],
     "deadlines": {
-      "fall": "February 1",
-      "winter": "October 1"
+      "TBA": "TBA"
     },
-    "description": "Leading research university with strong engineering programs.",
+    "description": "A hub of research and innovation, offering active labs, hands-on projects, and strong faculty mentorship, and a popular choice for 2+2 collaborations.",
     "website": "https://www.buffalo.edu",
-    "logo": "/logos/ub.png",
-    "ranking": "#1 in Canada"
+    "logo": "/logos/ub.svg",
+    "ranking": "#36 in Public Universities"
+  ,"video": "https://www.youtube.com/watch?v=hblIIfE3ryY&t=11s"
   },
   {
-    "name": "University of Melbourne",
-    "country": "Australia",
-    "city": "Melbourne",
-    "programs": ["2+2", "3+1"],
-    "gpa": "3.2+",
-    "toefl": "90+",
-    "ielts": "6.5+",
+    "name": "Iowa State University",
+    "country": "USA",
+    "city": "Ames",
+    "programs": ["2+2"],
+     "requirements": [
+     "1. Competitive BITSAT score",
+      "2. English Proficiency test within 2 years at BITS",
+      "3. 75 percentage or more in PCM in 12th standard"
+    ],
     "deadlines": {
-      "semester1": "December 31",
-      "semester2": "May 31"
+      "TBA": "TBA"
     },
-    "description": "Prestigious university known for research and innovation.",
-    "website": "https://www.unimelb.edu.au",
-    "logo": "/logos/umelb.png",
-    "ranking": "#1 in Australia"
+    "description": "Iowa State University hosts many BITSian professors and offers a welcoming, research-friendly culture.",
+    "website": "https://www.iastate.edu",
+    "logo": "/logos/isu.svg",
+    "ranking": "#121 in USA"
+  ,"video": "https://www.youtube.com/watch?v=qx9Cour_Hvo&t=556s"
+  },
+  {
+    "name": "Rensselaer Polytechnic Institute",
+    "country": "USA",
+    "city": "Troy",
+    "programs": ["2+2"],
+    "requirements": [
+      "1. Competitive BITSAT score",
+      "2. English Proficiency test within 2 years at BITS",
+      "3. 75 percentage or more in PCM in 12th standard"
+    ],
+    "deadlines": {
+      "TBA": "TBA"
+    },
+    "description": "A strong research culture with amazing labs and hands-on mentorship.",
+    "website": "https://www.rpi.edu",
+    "logo": "/logos/rpi.svg",
+    "ranking": "#70 in USA"
+  ,"video": "https://www.youtube.com/watch?v=4Ho7nT2TA-A&t=407s"
+  },
+  {
+    "name": "BITSoM (Mumbai)",
+    "country": "India",
+    "city": "Mumbai",
+    "programs": ["3+2"],
+    "requirements": [
+      "1. Competitive BITSAT score",
+      "2. 75 percentage or more in PCM in 12th standard",
+      "3. More than 7 CGPA in BITS by end of 6th semester"
+    ],
+  "deadlines": {
+    "TBA" : "TBA"
+  },
+    "description": " Where technology meets management, offering specialized programs to shape future leaders.",
+    "website": "https://www.bitsom.edu.in",
+    "logo": "/logos/bitsom.png",
+    "ranking": "TOP B-School in India"
   }
 ]
