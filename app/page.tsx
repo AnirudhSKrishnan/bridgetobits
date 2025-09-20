@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Section from "@/components/section";
 import FeatureCard from "@/components/feature-card";
+import FeatureIcon from "@/components/FeatureIcon";
 import Reveal from "@/components/reveal";
 
 export default function HomePage() {
@@ -169,59 +170,61 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {
-              icon: "🎥",
+              icon: "video",
               title: "Comprehensive Video Guides",
               desc: "Step-by-step video tutorials covering every aspect of the transfer process from application to visa."
             },
             {
-              icon: "📥",
+              icon: "download",
               title: "Downloadable Resources",
               desc: "Checklists, templates, and guides you can download and access throughout your journey."
             },
             {
-              icon: "🗓️",
+              icon: "calendar",
               title: "Timeline Planning",
               desc: "Detailed timelines and deadline trackers to ensure you never miss important dates."
             },
             {
-              icon: "👥",
+              icon: "users",
               title: "Peer Community",
               desc: "Connect with fellow BITS students who are going through or have completed the transfer process."
             },
             
             {
-              icon: "🏫",
+              icon: "university",
               title: "University Database",
               desc: "Comprehensive database of partner universities with detailed requirements and program overviews across 15 countries."
             },
             {
-              icon: "👨🏻‍💻",
+              icon: "support",
               title: "Expert Support",
               desc: "Get your questions answered by our experienced team and successful students who have successfully transferred before."
             },
             {
-              icon: "🗓️",
+              icon: "tracking",
               title: "Success Tracking",
               desc: "Track your progress with personalized recommendations based on your profile and goals."
             },
             {
-              icon: "📚",
+              icon: "books",
               title: "BITS-Specific Content",
               desc: "Content tailored specifically for BITS students, including credit mappings and course equivalencies."
               },
           ].map((feature, i) => (
             <Reveal key={feature.title} delay={60 * i}>
-              <div className="card card-focusable text-center p-6 w-64 h-64 flex flex-col justify-between" style={{ background: '#181818', border: `1.5px solid #333` }}>
+              {/* Make cards fluid so long titles/descriptions never overflow on desktop */}
+              <div className="card card-focusable text-center p-6 w-full h-auto min-h-[260px] flex flex-col justify-between"
+                   style={{ background: '#181818', border: `1.5px solid #333` }}>
                 <div 
-                  className="w-20 h-20 mx-auto mb-4 rounded-lg flex items-center justify-center border border-black"
-                  style={{ background: 'transparent', color: '#111', fontWeight: 700 }}
+                  className="w-20 h-20 mx-auto mb-4 rounded-lg flex items-center justify-center border border-black text-yellow-400"
+                  style={{ background: 'transparent', fontWeight: 700 }}
                 >
-                  <span style={{ fontSize: '2.5rem', lineHeight: 1 }}>{feature.icon}</span>
+                  <FeatureIcon name={feature.icon as any} size={40} />
                 </div>
-                <h3 className="font-semibold text-lg mb-3" style={{ color: yellow, fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
+                <h3 className="font-semibold text-lg mb-3 break-words" style={{ color: yellow, fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold', wordBreak: 'break-word' }}>
                   {feature.title}
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: white, opacity: 0.85 }}>
@@ -245,38 +248,40 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {
-              icon: "🎓",
+              icon: "cap",
               title: "BITSians-Led Platform",
               desc: "Founded and run by BITS alumni who have successfully navigated the transfer process themselves."
             },
             {
-              icon: "🌐",
+              icon: "globe",
               title: "Global University Partnerships",
               desc: "Access to a wide network of top universities worldwide through exclusive partnerships."
             },
             {
-              icon: "📝",
+              icon: "note",
               title: "Personalized Guidance",
               desc: "Receive one-on-one support tailored to your academic background and goals."
             },
             {
-              icon: "💡",
+              icon: "bulb",
               title: "Proven Strategies",
               desc: "Benefit from strategies and tips that have helped hundreds of BITSians transfer successfully."
             }
           ].map((feature, i) => (
             <Reveal key={feature.title} delay={60 * i}>
-              <div className="card card-focusable text-center p-6 w-64 h-64 flex flex-col justify-between" style={{ background: '#181818', border: `1.5px solid #333` }}>
+              {/* Fluid height and width to prevent desktop overflow */}
+              <div className="card card-focusable text-center p-6 w-full h-auto min-h-[260px] flex flex-col justify-between"
+                   style={{ background: '#181818', border: `1.5px solid #333` }}>
                 <div 
-                  className="w-20 h-20 mx-auto mb-4 rounded-lg flex items-center justify-center border border-black"
-                  style={{ background: 'transparent', color: '#111', fontWeight: 700 }}
+                  className="w-20 h-20 mx-auto mb-4 rounded-lg flex items-center justify-center border border-black text-yellow-400"
+                  style={{ background: 'transparent', fontWeight: 700 }}
                 >
-                  <span style={{ fontSize: '2.5rem', lineHeight: 1 }}>{feature.icon}</span>
+                  <FeatureIcon name={feature.icon as any} size={40} />
                 </div>
-                <h3 className="font-semibold text-lg mb-3" style={{ color: yellow, fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
+                <h3 className="font-semibold text-lg mb-3 break-words" style={{ color: yellow, fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold', wordBreak: 'break-word' }}>
                   {feature.title}
                 </h3>
                 <p className="text-sm leading-relaxed" style={{ color: white, opacity: 0.85 }}>
