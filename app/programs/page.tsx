@@ -37,15 +37,15 @@ export default function ProgramsPage() {
   ];
 
   return (
-  <div className="mt-32 min-h-screen" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
-      <div className="fixed top-[-16px] left-6 z-50 hidden md:block">
+  <div className="mt-20 sm:mt-32 min-h-screen px-4 sm:px-6" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
+      <div className="fixed top-[-16px] left-4 sm:left-6 z-50 hidden md:block">
         <Link href="/">
           <Image
             src="/logos/b2b_logo.svg"
             alt="Bridge to BITS Logo"
             width={180}
             height={180}
-            className="w-44 h-44 drop-shadow-2xl"
+            className="w-32 h-32 sm:w-44 sm:h-44 drop-shadow-2xl"
             priority
           />
         </Link>
@@ -54,10 +54,12 @@ export default function ProgramsPage() {
       <Section>
         <div className="text-center">
           <Reveal>
-            <h1 className="h1 yellow-gradient" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>Transfer Programs</h1>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold yellow-gradient mb-4" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
+              Transfer Programs
+            </h1>
           </Reveal>
           <Reveal delay={120} variant="fade">
-            <p className="hero-sub mt-8 mb-6 max-w-3xl mx-auto" style={{ fontFamily: 'Inter, Montserrat, Arial, sans-serif', color: '#fff', fontSize: '1.2rem' }}>
+            <p className="text-base sm:text-lg lg:text-xl mt-4 sm:mt-8 mb-4 sm:mb-6 max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: 'Inter, Montserrat, Arial, sans-serif', color: '#fff' }}>
               Explore diverse transfer programs at BITS, designed to match your goals and timeline, 
               both programs offer cost-effective, flexible, and career-focused opportunities.
             </p>
@@ -67,12 +69,12 @@ export default function ProgramsPage() {
 
       {/* Programs Grid */}
       <Section>
-        <div className="grid lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 max-w-6xl mx-auto">
           {programs.map((program, index) => (
             <Reveal key={program.id} delay={index * 120}>
-              <div className="card card-focusable h-full relative" style={{ background: '#181818', border: '1.5px solid #333' }}>
+              <div className="card card-focusable h-full relative p-4 sm:p-6" style={{ background: '#181818', border: '1.5px solid #333' }}>
                 {program.badge && (
-                  <div className="absolute -top-3 left-6">
+                  <div className="absolute -top-3 left-4 sm:left-6">
                     <span
                       className="text-xs px-3 py-1 rounded-full font-semibold"
                       style={{
@@ -86,11 +88,11 @@ export default function ProgramsPage() {
                 )}
                 
                 <div className="flex flex-col h-full">
-                  <h3 className="h3 mb-3" style={{ color: '#fac203', fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3" style={{ color: '#fac203', fontFamily: 'Helvetica, Arial, sans-serif' }}>
                     {program.title}
                   </h3>
                   
-                  <p className="mb-4 flex-grow" style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.85 }}>
+                  <p className="mb-4 flex-grow text-sm sm:text-base leading-relaxed" style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.85 }}>
                     {program.description}
                   </p>
 

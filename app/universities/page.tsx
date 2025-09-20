@@ -46,15 +46,15 @@ export default function Universities() {
   }, [country, program, query]);
 
   return (
-    <div className="mt-32 min-h-screen" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
-      <div className="fixed top-[-16px] left-6 z-50 hidden md:block">
+    <div className="mt-20 sm:mt-32 min-h-screen px-4 sm:px-6" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
+      <div className="fixed top-[-16px] left-4 sm:left-6 z-50 hidden md:block">
         <Link href="/">
           <Image
             src="/logos/b2b_logo.svg"
             alt="Bridge to BITS Logo"
             width={180}
             height={180}
-            className="w-44 h-44 drop-shadow-2xl"
+            className="w-32 h-32 sm:w-44 sm:h-44 drop-shadow-2xl"
             priority
             style={{ background: '#111', borderRadius: '1.5rem', border: '2px solid #fac203' }}
           />
@@ -62,16 +62,18 @@ export default function Universities() {
       </div>
       <Section>
         <div className="w-full text-center">
-          <h1 className="h1 yellow-gradient text-center" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>Universities</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold yellow-gradient text-center mb-4" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
+            Universities
+          </h1>
         </div>
         <div className="w-full text-center">
-        <p className="mt-6 mb-6 max-w-2xl mx-auto" style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.85 }}>
+        <p className="mt-4 sm:mt-6 mb-6 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" style={{ color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif', opacity: 0.85 }}>
          Browse your dream universities and their application details.
         </p>
         {/* controls */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 items-center max-w-4xl mx-auto">
           <select
-            className="input border-2 border-yellow-400 bg-black text-white"
+            className="input border-2 border-yellow-400 bg-black text-white min-h-[48px] px-3 py-2 text-sm sm:text-base"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             aria-label="Filter by country"
@@ -83,7 +85,7 @@ export default function Universities() {
             ))}
           </select>
           <select
-            className="input border-2 border-yellow-400 bg-black text-white"
+            className="input border-2 border-yellow-400 bg-black text-white min-h-[48px] px-3 py-2 text-sm sm:text-base"
             value={program}
             onChange={(e) => setProgram(e.target.value)}
             aria-label="Filter by program"

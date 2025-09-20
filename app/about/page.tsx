@@ -77,8 +77,8 @@ export default function AboutPage() {
   ];
 
   return (
-  <div className="mt-32 min-h-screen" style={{ background: black, color: white, fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
-      <div className="fixed top-[-16px] left-6 z-50 hidden md:block">
+  <div className="mt-20 sm:mt-32 min-h-screen px-4 sm:px-6" style={{ background: black, color: white, fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
+      <div className="fixed top-[-16px] left-4 sm:left-6 z-50 hidden md:block">
         <Link href="/">
           <Image
             src="/logos/b2b_logo.svg"
