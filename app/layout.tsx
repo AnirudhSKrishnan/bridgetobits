@@ -10,6 +10,7 @@ import CustomCursor from "@/components/CustomCursor";
 export const metadata: Metadata = {
   title: "Bridge To BITS",
   description: "Bridge to BITS",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -17,10 +18,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const white = "#fff";
   return (
     <html lang="en" className="dark">
-      <body className="min-h-screen flex flex-col" style={{ background: black, color: white }}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+      </head>
+      <body className="min-h-screen flex flex-col overflow-x-hidden" style={{ background: black, color: white }}>
         <CustomCursor />
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 relative">{children}</main>
         <Footer />
       </body>
     </html>
