@@ -51,11 +51,18 @@ export default function Contact() {
                   throw new Error("Email service is not configured.");
                 }
                 const params = {
-                  to_email: DEFAULT_TO_EMAIL,
+                  // Match your EmailJS template variables exactly
+                  name: `${form.firstName} ${form.lastName}`.trim(),
+                  email: form.email,
+                  // Also provide legacy aliases if your template uses them
                   from_name: `${form.firstName} ${form.lastName}`.trim(),
                   from_email: form.email,
-                  phone: form.phone,
                   message: form.message,
+                  phone: form.phone,
+                  time: new Date().toLocaleString(),
+                  reply_to: form.email,
+                  // Optional: some templates ignore this because To Email is set in the template UI
+                  to_email: DEFAULT_TO_EMAIL,
                 } as Record<string, unknown>;
 
                 await emailjs.send(SERVICE_ID, TEMPLATE_ID, params, { publicKey: PUBLIC_KEY });
