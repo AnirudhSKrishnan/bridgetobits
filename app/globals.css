@@ -1,4 +1,41 @@
 /* =============================================================================
+   Mobile Touch Optimization
+   ========================================================================== */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Re-enable selection for text content */
+p, span, div, h1, h2, h3, h4, h5, h6, li, td, th {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Improve button and link touch targets */
+button, a, [role="button"] {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+input, textarea, select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* =============================================================================
    Home Page Black/White/Yellow Theme
    ========================================================================== */
 .home-blackwhite {
@@ -13,7 +50,10 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
- /* And kill any stray top borders/shadows that create "bands" */
+  color: transparent;
+}
+
+/* And kill any stray top borders/shadows that create "bands" */
 main, section, .section, .hero, .hero-wrap {
   border-top: 0 !important;
   box-shadow: none !important;
@@ -204,8 +244,16 @@ html, body {
   .shadow-lg, .shadow-xl, .shadow-2xl {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   }
-}-fill-color: transparent;
 }
+
+.yellow-gradient {
+  background: linear-gradient(90deg, #FFD600 0%, #FFEA00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -576,7 +624,7 @@ header + *{
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: .92;
-  font-size: clamp(60px, 9.6vw, 168px);
+  font-size: clamp(80px, 12vw, 168px);
 }
 
 /* Keep legacy hero text classes available (if any) */

@@ -91,16 +91,12 @@ export default function Navbar() {
               color: yellow, 
               fontFamily: 'Montserrat, Inter, ui-sans-serif',
               border: 'none',
-              outline: 'none'
+              outline: 'none',
+              cursor: 'pointer',
+              WebkitTapHighlightColor: 'transparent'
             }}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log('Menu button clicked, open:', !open);
+            onClick={() => {
               setOpen((s) => !s);
-            }}
-            onTouchStart={(e) => {
-              e.stopPropagation();
             }}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -121,12 +117,8 @@ export default function Navbar() {
           {/* Backdrop */}
           <div 
             className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log('Backdrop clicked');
-              setOpen(false);
-            }}
-            style={{ touchAction: 'none' }}
+            onClick={() => setOpen(false)}
+            style={{ touchAction: 'auto', cursor: 'pointer' }}
           />
           
           {/* Mobile Menu */}
@@ -153,16 +145,10 @@ export default function Navbar() {
                   background: pathname === l.href ? 'rgba(250,194,3,0.15)' : 'transparent',
                   fontFamily: 'Montserrat, Inter, ui-sans-serif',
                   transition: 'color 0.18s, background 0.18s',
-                  touchAction: 'manipulation',
-                  WebkitTapHighlightColor: 'transparent'
+                  cursor: 'pointer',
+                  WebkitTapHighlightColor: 'rgba(250,194,3,0.2)'
                 }}
-                onClick={(e) => {
-                  console.log('Menu item clicked:', l.label);
-                  setOpen(false);
-                }}
-                onTouchEnd={(e) => {
-                  e.preventDefault();
-                }}
+                onClick={() => setOpen(false)}
               >
                 <span className="text-xl flex-shrink-0" style={{ color: pathname === l.href ? yellow : '#fff', opacity: 0.9 }}>
                   {l.icon}
