@@ -50,10 +50,23 @@ export default function HomePage() {
           {/* SEO/AT-friendly real heading (hidden visually) */}
           <h1 className="sr-only">Your bridge to International education</h1>
 
+          {/* Mobile-friendly visible heading (SVG is desktop-only) */}
+          <div className="md:hidden">
+            <h1
+              aria-hidden="true"
+              className="text-center font-extrabold"
+              style={{ fontFamily: 'var(--font-hero)', letterSpacing: '-0.02em' }}
+            >
+              <span className="block text-[clamp(34px,10vw,46px)] leading-tight text-white">Your Bridge to</span>
+              <span className="block text-[clamp(34px,10vw,46px)] leading-tight yellow-gradient">International</span>
+              <span className="block text-[clamp(34px,10vw,46px)] leading-tight text-white">Education</span>
+            </h1>
+          </div>
+
           {/* Gradient-only ripple headline using clipPath */}
           <svg
-            className="heroClip"
-            viewBox="0 0 1600 430"
+            className="heroClip hidden md:block"
+            viewBox="0 0 1600 560"
             role="img"
             aria-hidden="true"
             preserveAspectRatio="xMidYMid meet"
@@ -84,7 +97,7 @@ export default function HomePage() {
               <clipPath id="heroClipPath" clipPathUnits="userSpaceOnUse">
                 <text
                   x="50%"
-                  y="120"
+                  y="140"
                   textAnchor="middle"
                   className="heroClip__text"
                   fill="url(#heroWhite)"
@@ -93,7 +106,7 @@ export default function HomePage() {
                 </text>
                 <text
                   x="50%"
-                  y="240"
+                  y="320"
                   textAnchor="middle"
                   className="heroClip__text"
                   fill="url(#heroGrad)"
@@ -102,7 +115,7 @@ export default function HomePage() {
                 </text>
                 <text
                   x="50%"
-                  y="360"
+                  y="500"
                   textAnchor="middle"
                   className="heroClip__text"
                   fill="url(#heroWhite)"
@@ -116,7 +129,7 @@ export default function HomePage() {
             <g>
               <text
                 x="50%"
-                y="120"
+                y="140"
                 textAnchor="middle"
                 className="heroClip__text"
                 fill="url(#heroWhite)"
@@ -125,7 +138,7 @@ export default function HomePage() {
               </text>
               <text
                 x="50%"
-                y="240"
+                y="320"
                 textAnchor="middle"
                 className="heroClip__text yellow-gradient"
                 fill="url(#heroGrad)"
@@ -134,7 +147,7 @@ export default function HomePage() {
               </text>
               <text
                 x="50%"
-                y="360"
+                y="500"
                 textAnchor="middle"
                 className="heroClip__text"
                 fill="url(#heroWhite)"
