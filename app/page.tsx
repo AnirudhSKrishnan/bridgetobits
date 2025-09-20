@@ -20,6 +20,16 @@ export default function HomePage() {
     { name: "S.K.", text: "The university shortlist was spot-on." },
   ];
   const loop = [...testimonials, ...testimonials];
+  const uniLogos = [
+    '/logos/rmit.svg',
+    '/logos/ub.svg',
+    '/logos/rpi.svg',
+    '/logos/usc.svg',
+    '/logos/isu.svg',
+    '/logos/csp_logo.svg',
+    '/logos/bitsom.png',
+  ];
+  const uniLogosLoop = [...uniLogos, ...uniLogos];
 
   return (
   <div className="pt-16 sm:pt-24 min-h-screen px-4 sm:px-6" style={{ background: black, color: white, fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
@@ -311,7 +321,9 @@ export default function HomePage() {
         <div className="text-center">
 
           <Reveal>
-            <h2 className="h2 yellow-gradient" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>Study at your dream university</h2>
+            <h2 className="h2 yellow-gradient" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 'bold' }}>
+              Trusted by Students from Leading Universities Worldwide
+            </h2>
           </Reveal>
           <Reveal delay={120} variant="fade">
             <p className="muted mt-2 mb-large" style={{ fontSize: '1.35rem', lineHeight: 1.6, color: '#fff' }}>
@@ -321,21 +333,15 @@ export default function HomePage() {
 
           <Reveal delay={180} variant="scale">
             <div className="py-6">
-              <div className="flex flex-wrap justify-center gap-12 items-center" style={{ minHeight: 128 }}>
-                {/* University logos, no animation */}
-                {[
-                  '/logos/rmit.svg',
-                  '/logos/ub.svg',
-                  '/logos/rpi.svg',
-                  '/logos/usc.svg',
-                  '/logos/isu.svg',
-                  '/logos/csp_logo.svg',
-                  '/logos/bitsom.png',
-                ].map((src, i) => (
-                  <div key={src + i} className="flex items-center justify-center h-44 w-72 p-2 mx-6">
-                    <Image src={src} alt="University logo" width={320} height={180} className="object-contain h-40 w-auto" />
-                  </div>
-                ))}
+              {/* Continuous marquee using duplicated logos */}
+              <div className="marquee" style={{ minHeight: 128 }}>
+                <div className="marquee__track">
+                  {uniLogosLoop.map((src, i) => (
+                    <div key={src + i} className="flex items-center justify-center h-40 w-64 p-2">
+                      <Image src={src} alt="University logo" width={256} height={160} className="object-contain h-36 w-auto opacity-90" />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </Reveal>
