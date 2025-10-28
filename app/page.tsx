@@ -174,7 +174,7 @@ export default function HomePage() {
 
           <div className="flex justify-center gap-3">
             <Link href="/universities" className="btn btn-primary btn-hero" style={{ background: '#FFD600', color: '#111', border: 'none' }}>Get Started Free</Link>
-            <Link href="/contact" className="btn btn-ghost btn-hero" style={{ color: '#FFD600', borderColor: '#FFD600' }}>Watch Videos</Link>
+            <Link href="https://www.youtube.com/@BridgeToBITS22" className="btn btn-ghost btn-hero" style={{ color: '#FFD600', borderColor: '#FFD600' }}>Watch Videos</Link>
           </div>
         </div>
       </Section>
