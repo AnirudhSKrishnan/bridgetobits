@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Bridge To BITS",
   description: "Bridge to BITS",
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
+  icons: {
+      icon: "/logos/tab_logo.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
