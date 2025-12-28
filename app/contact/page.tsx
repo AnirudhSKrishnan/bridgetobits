@@ -5,7 +5,6 @@ import Section from "@/components/section";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
 import { FaLinkedin, FaInstagram, FaYoutube } from 'react-icons/fa';
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -16,11 +15,6 @@ export default function Contact() {
     phone: "",
     message: "",
   });
-
-  const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
-  const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
-  const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
-  const DEFAULT_TO_EMAIL = "bridgetobits@gmail.com";
 
   return (
     <div className="mt-20 sm:mt-32 min-h-screen px-4" style={{ background: '#111', color: '#fff', fontFamily: 'Inter, Montserrat, Arial, sans-serif' }}>
@@ -47,25 +41,16 @@ export default function Contact() {
               e.preventDefault();
               try {
                 setStatus("sending");
-                if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-                  throw new Error("Email service is not configured.");
-                }
-                const params = {
-                  // Match your EmailJS template variables exactly
-                  name: `${form.firstName} ${form.lastName}`.trim(),
-                  email: form.email,
-                  // Also provide legacy aliases if your template uses them
-                  from_name: `${form.firstName} ${form.lastName}`.trim(),
-                  from_email: form.email,
-                  message: form.message,
-                  phone: form.phone,
-                  time: new Date().toLocaleString(),
-                  reply_to: form.email,
-                  // Optional: some templates ignore this because To Email is set in the template UI
-                  to_email: DEFAULT_TO_EMAIL,
-                } as Record<string, unknown>;
+                const res = await fetch("/api/contact", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(form),
+                });
 
-                await emailjs.send(SERVICE_ID, TEMPLATE_ID, params, { publicKey: PUBLIC_KEY });
+                if (!res.ok) {
+                  throw new Error("Failed to send");
+                }
+
                 setStatus("sent");
                 setForm({ firstName: "", lastName: "", email: "", phone: "", message: "" });
               } catch (err) {
