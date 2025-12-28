@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+export const runtime = "nodejs";
+
 const toEmail = process.env.CONTACT_TO_EMAIL || "bridgetobits@gmail.com";
 const fromEmail = process.env.CONTACT_FROM_EMAIL || process.env.SMTP_USER || "no-reply@bridgetobits.com";
 const smtpHost = process.env.SMTP_HOST;

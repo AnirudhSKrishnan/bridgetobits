@@ -23,7 +23,7 @@ export function ResourceSignOutButton() {
     <button
       className="px-4 py-2 rounded-lg text-sm font-semibold text-black transition-transform duration-150 hover:-translate-y-0.5"
       style={{ background: yellow }}
-      onClick={() => signOut({ callbackUrl: "/" })}
+      onClick={() => signOut({ callbackUrl: "/resources" })}
       type="button"
     >
       Sign out

@@ -1,7 +1,7 @@
 import Section from "@/components/section";
 import Image from "next/image";
 import Link from "next/link";
-import { auth } from "@/auth";
+import { auth, isGoogleConfigured } from "@/auth";
 import { ResourceSignInButton, ResourceSignOutButton } from "./auth-buttons";
 
 export default async function Page() {
@@ -55,7 +55,13 @@ export default async function Page() {
               You&apos;ll be redirected back here after a quick Google login.
             </p>
             <div className="mt-6 flex justify-center">
-              <ResourceSignInButton />
+              {isGoogleConfigured ? (
+                <ResourceSignInButton />
+              ) : (
+                <p className="text-sm text-white/70">
+                  Google sign-in isn&apos;t configured yet. Please add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in your deployment environment.
+                </p>
+              )}
             </div>
           </div>
         )}

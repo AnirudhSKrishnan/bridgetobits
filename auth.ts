@@ -3,7 +3,7 @@ import Google from "next-auth/providers/google";
 
 const clientId = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-const isGoogleConfigured = Boolean(clientId && clientSecret);
+export const isGoogleConfigured = Boolean(clientId && clientSecret);
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: isGoogleConfigured
