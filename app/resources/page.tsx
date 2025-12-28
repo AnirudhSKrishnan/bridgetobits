@@ -8,6 +8,7 @@ export default async function Page() {
   const session = await auth();
   const userName = session?.user?.name ?? null;
   const userEmail = session?.user?.email ?? null;
+  const isSignedIn = Boolean(userEmail);
 
   return (
     <div className="mt-32 min-h-screen" style={{ background: "#111", color: "#fff", fontFamily: "Inter, Montserrat, Arial, sans-serif" }}>
@@ -30,14 +31,14 @@ export default async function Page() {
           <p className="muted mt-2 text-center" style={{ color: "#fff", opacity: 0.85, fontFamily: "Inter, Montserrat, Arial, sans-serif" }}>Guides, videos, and useful links.</p>
         </div>
 
-        {session ? (
+        {isSignedIn ? (
           <div className="mt-10 mx-auto max-w-3xl space-y-6 rounded-2xl border border-yellow-400/20 bg-white/5 p-8 text-left shadow-lg backdrop-blur">
             <div className="space-y-2">
               <p className="text-sm uppercase tracking-wide text-yellow-300/80">Welcome back</p>
               <h2 className="text-2xl font-semibold" style={{ fontFamily: "Helvetica, Arial, sans-serif" }}>
                 {userName ?? "Resource Explorer"}
               </h2>
-              {userEmail && <p className="text-sm text-white/70">Signed in as {userEmail}</p>}
+              <p className="text-sm text-white/70">Signed in as {userEmail}</p>
             </div>
             <p className="text-white/80">
               Thanks for signing in! We&apos;re curating in-depth guides, application checklists, and interview prep videos exclusively for members. Check back soon as we continue to roll out the full resource library.
