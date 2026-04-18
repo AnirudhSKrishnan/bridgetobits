@@ -14,22 +14,54 @@ import (
 
 var jwtKey = []byte(os.Getenv("JWT_SECRET"))
 
+// --- Structs ---
+
+type Credentials struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type Claims struct {
 	Email     string `json:"email"`
-	SessionID string `json:"session_id"` // This must match the DB
+	SessionID string `json:"session_id"`
 	jwt.RegisteredClaims
 }
 
-// Helper to generate a random session string
+// --- Helpers ---
+
 func generateRandomString(n int) string {
 	b := make([]byte, n)
 	rand.Read(b)
 	return hex.EncodeToString(b)
 }
 
+// --- Handlers ---
+
+func SignupHandler(w http.ResponseWriter, r *http.Request) {
+	var creds Credentials
+	if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(creds.Password), bcrypt.DefaultCost)
+
+	_, err := db.Exec("INSERT INTO users (email, password) VALUES (?, ?)", creds.Email, string(hashedPassword))
+	if err != nil {
+		http.Error(w, "User already exists", http.StatusConflict)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"message": "User created"})
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var creds Credentials
-	json.NewDecoder(r.Body).Decode(&creds)
+	if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
 
 	var storedPassword string
 	err := db.QueryRow("SELECT password FROM users WHERE email = ?", creds.Email).Scan(&storedPassword)
@@ -38,17 +70,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 1. Generate a brand new Session ID for this login
 	newSessionID := generateRandomString(16)
-
-	// 2. Store it on the SERVER (Database)
 	_, err = db.Exec("UPDATE users SET current_session_id = ? WHERE email = ?", newSessionID, creds.Email)
 	if err != nil {
-		http.Error(w, "Server error", http.StatusInternalServerError)
+		http.Error(w, "Database error", http.StatusInternalServerError)
 		return
 	}
 
-	// 3. Put it in the JWT for the CLIENT
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
 		Email:            creds.Email,
@@ -73,17 +101,15 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		claims := &Claims{}
 		jwt.ParseWithClaims(cookie.Value, claims, func(t *jwt.Token) (interface{}, error) { return jwtKey, nil })
 
-		// 4. LOGOUT: Change the JWT on the SERVER (make it a new random string)
-		// Now the client's JWT session_id will NEVER match the server's version.
+		// Invalidate on Server
 		newDeadID := generateRandomString(16)
 		db.Exec("UPDATE users SET current_session_id = ? WHERE email = ?", newDeadID, claims.Email)
 	}
 
-	// Clear the client cookie just to be clean
 	http.SetCookie(w, &http.Cookie{
 		Name: "auth_token", Value: "", MaxAge: -1, HttpOnly: true, Secure: true, Path: "/",
 	})
-	json.NewEncoder(w).Encode(map[string]string{"message": "Logged out successfully"})
+	json.NewEncoder(w).Encode(map[string]string{"message": "Logged out"})
 }
 
 func ValidateHandler(w http.ResponseWriter, r *http.Request) {
@@ -100,12 +126,9 @@ func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 5. THE MATCH CHECK: Do the two JWT values match?
 	var serverSessionID string
 	err = db.QueryRow("SELECT current_session_id FROM users WHERE email = ?", claims.Email).Scan(&serverSessionID)
-
 	if err != nil || claims.SessionID != serverSessionID {
-		// If they don't match, the client is using an "old" JWT from before logout
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
