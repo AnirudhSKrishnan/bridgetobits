@@ -87,6 +87,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, _ := token.SignedString(jwtKey)
 
+	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate")
+
 	http.SetCookie(w, &http.Cookie{
 		Name: "auth_token", Value: tokenString, Expires: expirationTime,
 		HttpOnly: true, Secure: true, Path: "/", SameSite: http.SameSiteLaxMode,
