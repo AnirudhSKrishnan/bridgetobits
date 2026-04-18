@@ -17,26 +17,16 @@ export function ResourceSignInButton() {
 }
 
 export function ResourceSignOutButton() {
-  const handleLogout = async () => {
-    try {
-      // 1. Call the Next.js native API to securely destroy the cookie
-      await fetch("/api/logout", { method: "POST" });
-      
-      // 2. Hard redirect to completely wipe the Next.js Router Cache
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  };
-
   return (
-    <button
-      className="px-4 py-2 rounded-lg text-sm font-semibold text-black transition-transform duration-150 hover:-translate-y-0.5"
-      style={{ background: yellow }}
-      onClick={handleLogout}
-      type="button"
-    >
-      Sign out
-    </button>
+    // NATIVE HTML FORM: This bypasses all Next.js client-side caching magic
+    <form action="/api/logout" method="POST">
+      <button
+        className="px-4 py-2 rounded-lg text-sm font-semibold text-black transition-transform duration-150 hover:-translate-y-0.5"
+        style={{ background: yellow }}
+        type="submit"
+      >
+        Sign out
+      </button>
+    </form>
   );
 }

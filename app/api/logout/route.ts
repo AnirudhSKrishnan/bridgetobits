@@ -1,16 +1,17 @@
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
 export async function POST() {
-  // Overwrite the cookie with the EXACT same security footprint Go used, but expired.
+  // 1. Physically destroy the cookie on the server
   cookies().set("auth_token", "", {
     maxAge: 0,
-    expires: new Date(0), // Sets expiration to Jan 1, 1970
+    expires: new Date(0),
     path: "/",
     httpOnly: true,
     secure: true,
     sameSite: "lax",
   });
   
-  return NextResponse.json({ success: true });
+  // 2. Perform a hard server-side redirect back to login
+  redirect("/login");
 }
