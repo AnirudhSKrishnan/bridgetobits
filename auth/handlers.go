@@ -4,8 +4,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
-	"net/http/httputil"
-	"net/url"
 	"os"
 	"time"
 
@@ -16,9 +14,10 @@ import (
 var jwtKey = []byte(os.Getenv("JWT_SECRET"))
 
 type User struct {
-	ID       int    `json:"id"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	ID           int    `json:"id"`
+	Email        string `json:"email"`
+	Password     string `json:"password"`
+	TokenVersion int    `json:"token_version"`
 }
 
 type Credentials struct {
@@ -27,7 +26,8 @@ type Credentials struct {
 }
 
 type Claims struct {
-	Email string `json:"email"`
+	Email   string `json:"email"`
+	Version int    `json:"version"` // Track version inside the token
 	jwt.RegisteredClaims
 }
 
@@ -62,7 +62,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var storedUser User
-	err := db.QueryRow("SELECT id, email, password FROM users WHERE email = ?", creds.Email).Scan(&storedUser.ID, &storedUser.Email, &storedUser.Password)
+	err := db.QueryRow("SELECT id, email, password, token_version FROM users WHERE email = ?", creds.Email).Scan(
+		&storedUser.ID, &storedUser.Email, &storedUser.Password, &storedUser.TokenVersion)
+
 	if err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, "Invalid credentials", http.StatusUnauthorized)
@@ -72,15 +74,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(storedUser.Password), []byte(creds.Password))
-	if err != nil {
+	if err = bcrypt.CompareHashAndPassword([]byte(storedUser.Password), []byte(creds.Password)); err != nil {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
 
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
-		Email: creds.Email,
+		Email:   creds.Email,
+		Version: storedUser.TokenVersion, // Embed current version in JWT
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
@@ -93,13 +95,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Updated to Secure: true for HTTPS
 	http.SetCookie(w, &http.Cookie{
 		Name:     "auth_token",
 		Value:    tokenString,
 		Expires:  expirationTime,
 		HttpOnly: true,
-		Secure:   true,
+		Secure:   true, // Production requirement for HTTPS
 		Path:     "/",
 		SameSite: http.SameSiteLaxMode,
 	})
@@ -108,6 +109,20 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	// 1. Increment version in DB to invalidate existing tokens on the server
+	cookie, err := r.Cookie("auth_token")
+	if err == nil {
+		claims := &Claims{}
+		token, _ := jwt.ParseWithClaims(cookie.Value, claims, func(t *jwt.Token) (interface{}, error) {
+			return jwtKey, nil
+		})
+
+		if token != nil && token.Valid {
+			db.Exec("UPDATE users SET token_version = token_version + 1 WHERE email = ?", claims.Email)
+		}
+	}
+
+	// 2. Instruct the browser to delete the cookie
 	http.SetCookie(w, &http.Cookie{
 		Name:     "auth_token",
 		Value:    "",
@@ -119,36 +134,34 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		SameSite: http.SameSiteLaxMode,
 	})
 
-	// Perform a hard server-side redirect to trigger a full page reload in the browser
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Logged out and session invalidated"})
 }
 
-// ResourcesMiddleware acts as a gateway for protected Next.js routes
-func ResourcesMiddleware(w http.ResponseWriter, r *http.Request) {
-	// 1. Look for the auth_token cookie
+// ValidateHandler checks if the token in the request is both valid and current
+func ValidateHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("auth_token")
 	if err != nil {
-		// No cookie found, redirect to login page
-		http.Redirect(w, r, "/login", http.StatusFound)
+		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	// 2. Parse and validate the JWT
 	claims := &Claims{}
-	token, err := jwt.ParseWithClaims(cookie.Value, claims, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(cookie.Value, claims, func(t *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
 
 	if err != nil || !token.Valid {
-		// Token is invalid or expired, redirect to login
-		http.Redirect(w, r, "/login", http.StatusFound)
+		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	// 3. Valid Token! Proxy the request transparently to the Next.js frontend running on port 3000
-	target, _ := url.Parse("http://localhost:3000")
-	proxy := httputil.NewSingleHostReverseProxy(target)
+	// Verify the version in the JWT matches the current version in the DB
+	var currentVersion int
+	err = db.QueryRow("SELECT token_version FROM users WHERE email = ?", claims.Email).Scan(&currentVersion)
+	if err != nil || claims.Version != currentVersion {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
-	// Forward the request
-	proxy.ServeHTTP(w, r)
+	w.WriteHeader(http.StatusOK)
 }
