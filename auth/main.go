@@ -28,7 +28,8 @@ func main() {
 	http.HandleFunc("/signup", enableCORS(SignupHandler))
 	http.HandleFunc("/login", enableCORS(LoginHandler))
 	http.HandleFunc("/logout", enableCORS(LogoutHandler))
-
+	http.HandleFunc("/resources", ResourcesMiddleware)
+	http.HandleFunc("/resources/", ResourcesMiddleware)
 	port := ":8080"
 	fmt.Printf("Go Auth Server running on http://localhost%s\n", port)
 	log.Fatal(http.ListenAndServe(port, nil))
