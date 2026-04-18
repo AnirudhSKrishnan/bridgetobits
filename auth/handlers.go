@@ -108,7 +108,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
-	// Updated to Secure: true and MaxAge: -1 to force browser deletion
 	http.SetCookie(w, &http.Cookie{
 		Name:     "auth_token",
 		Value:    "",
@@ -120,7 +119,8 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		SameSite: http.SameSiteLaxMode,
 	})
 
-	json.NewEncoder(w).Encode(map[string]string{"message": "Logged out successfully"})
+	// Perform a hard server-side redirect to trigger a full page reload in the browser
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 // ResourcesMiddleware acts as a gateway for protected Next.js routes
