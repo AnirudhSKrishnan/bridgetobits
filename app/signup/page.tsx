@@ -4,9 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-// Define the API base URL from environment variables
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-
 export default function SignupPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -20,15 +17,16 @@ export default function SignupPage() {
     setError("");
 
     try {
-      // Use the environment variable for the API endpoint
-      const res = await fetch(`${API_BASE_URL}/signup`, {
+      const res = await fetch("http://localhost:8080/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include", // Maintaining consistency for cross-origin requests
+        // credentials: "include" is not strictly needed for signup since it doesn't set a cookie, 
+        // but it's good practice for cross-origin consistency.
       });
 
       if (res.ok) {
+        // Redirect to login after successful account creation
         router.push("/login?message=Account created! Please log in.");
       } else {
         const data = await res.text();
