@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"os"
 	"time"
 
@@ -91,12 +93,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Updated to Secure: true for HTTPS
 	http.SetCookie(w, &http.Cookie{
 		Name:     "auth_token",
 		Value:    tokenString,
 		Expires:  expirationTime,
 		HttpOnly: true,
-		Secure:   false,
+		Secure:   true,
 		Path:     "/",
 		SameSite: http.SameSiteLaxMode,
 	})
@@ -105,15 +108,47 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	// Updated to Secure: true and MaxAge: -1 to force browser deletion
 	http.SetCookie(w, &http.Cookie{
 		Name:     "auth_token",
 		Value:    "",
 		Expires:  time.Unix(0, 0),
+		MaxAge:   -1,
 		HttpOnly: true,
-		Secure:   false,
+		Secure:   true,
 		Path:     "/",
 		SameSite: http.SameSiteLaxMode,
 	})
 
 	json.NewEncoder(w).Encode(map[string]string{"message": "Logged out successfully"})
+}
+
+// ResourcesMiddleware acts as a gateway for protected Next.js routes
+func ResourcesMiddleware(w http.ResponseWriter, r *http.Request) {
+	// 1. Look for the auth_token cookie
+	cookie, err := r.Cookie("auth_token")
+	if err != nil {
+		// No cookie found, redirect to login page
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
+	// 2. Parse and validate the JWT
+	claims := &Claims{}
+	token, err := jwt.ParseWithClaims(cookie.Value, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+
+	if err != nil || !token.Valid {
+		// Token is invalid or expired, redirect to login
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
+	// 3. Valid Token! Proxy the request transparently to the Next.js frontend running on port 3000
+	target, _ := url.Parse("http://localhost:3000")
+	proxy := httputil.NewSingleHostReverseProxy(target)
+
+	// Forward the request
+	proxy.ServeHTTP(w, r)
 }
