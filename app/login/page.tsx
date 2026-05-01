@@ -20,13 +20,12 @@ function LoginForm() {
     setError("");
 
     try {
-      const res = await fetch("https://b2b.ugbhartariya.com/login", {
-      method: "POST",
-      cache: "no-store", // Force the browser to bypass its cache
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-      credentials: "include",
-    });
+	const res = await fetch("https://bridgetobits.co.in/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+        credentials: "include", // CRITICAL: Tells browser to store the HttpOnly cookie
+      });
 
       if (res.ok) {
         // Upon success, redirect them to the protected area

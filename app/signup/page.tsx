@@ -17,7 +17,7 @@ export default function SignupPage() {
     setError("");
 
     try {
-      const res = await fetch("https://api.ugbhartariya.com/signup", {
+	const res = await fetch("https://bridgetobits.co.in/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
