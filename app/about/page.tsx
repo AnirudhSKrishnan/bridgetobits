@@ -114,6 +114,9 @@ export default function AboutPage() {
                 
                 <div className="space-y-4 leading-relaxed" style={{ color: white, fontFamily: 'Poppins, Arial, sans-serif' }}>
                   <p>
+                    Bridge to BITS is a student-founded platform, built by Sarthak Tomar (BITS Pilani, Hyderabad Campus), dedicated to helping students successfully navigate the BITS 2+2 International Transfer Programs.
+                  </p>
+                  <p>
                     Bridge to BITS started as a YouTube channel to spread awareness about the new BITS 2+2 programs, where information was very less and uncertainties were high. What began with sharing knowledge soon grew into a full platform offering 1-on-1 mentorship, counselling, test prep, and alumni guidance. Today with 100+ success stories, we continue to bridge the gap and help students step confidently into global opportunities.
                   </p>
                   <p>

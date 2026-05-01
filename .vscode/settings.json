@@ -1,0 +1,49 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "test",
+            "database": "Test",
+            "username": "root",
+            "password": "utkarsh#2709"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "GreenBuilding",
+            "database": "green_building_db",
+            "username": "root",
+            "password": "utkarsh#2709"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "b2bdatabase.cpwoasqcosff.ap-south-1.rds.amazonaws.com",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "B2B_AWS",
+            "database": "b2bdatabase",
+            "username": "sarthak",
+            "askForPassword": true
+        }
+    ]
+}
