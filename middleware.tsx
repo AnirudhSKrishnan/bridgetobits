@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
   try {
     // 3. Call the new /validate endpoint on your Go server
     // This checks if the JWT version matches the database version
-    const response = await fetch('https://b2b.ugbhartariya.com/validate', {
+    const response = await fetch('https://bridgetobits.co.in/validate', {
       headers: {
         'Cookie': `auth_token=${token.value}`,
       },
